@@ -1,7 +1,7 @@
 # Clients #
-Client/Angular/node_modules/
+src/Clients/Angular/node_modules/
 
 # WebApi #
-WebApi/bin/
-WebApi/obj/
-WebApi/wwwroot/
+src/Website.Api/bin/
+src/Website.Api/obj/
+src/Website.Api/wwwroot/

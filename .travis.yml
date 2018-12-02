@@ -7,9 +7,11 @@ install:
   - nvm install 10.14.1
   - nvm use 10.14.1
 before_script:
-  - npm install -g @angular/cli@7.1.0
-  - npm install
   - dotnet restore
+  - npm install -g @angular/cli@7.1.0
+  - pushd "src/Clients/Angular"
+  - npm install
+  - popd
 script:
   - dotnet build
   - pushd "src/Clients/Angular"

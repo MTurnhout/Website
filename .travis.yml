@@ -1,13 +1,17 @@
 language: csharp
 mono: none
 dotnet: 2.1.500
-node_js:
-  - 10.14.1
+#node_js: Doesn't work...
+#  - 10.14.1
+install:
+  - dotnet restore
+  - nvm install 10.14.1
+  - nvm use 10.14.1
+  - npm install
 before_script:
   - npm install -g @angular/cli
 script:
   - pushd "src/Clients/Angular" && ng build --prod && popd
-  - dotnet restore
   - dotnet build
 #deploy:
 #  provider: azure_web_apps

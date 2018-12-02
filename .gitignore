@@ -1,7 +1,9 @@
+# General #
+bin/
+obj/
+
 # Clients #
 src/Clients/Angular/node_modules/
 
 # WebApi #
-src/Website.Api/bin/
-src/Website.Api/obj/
 src/Website.Api/wwwroot/

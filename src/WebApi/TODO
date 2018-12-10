@@ -1,0 +1,11 @@
+=================================
+* Todo list for Web API project *
+=================================
+
+Todo:
+  Api:
+    ☐ Return blog posts list @created(2018-12-10 03:50)
+    ☐ Return blog post @created(2018-12-10 03:50)
+  Data:
+    ☐ Create blog data structure @created(2018-12-10 03:52)
+    ☐ Create migrations @created(2018-12-10 03:51)

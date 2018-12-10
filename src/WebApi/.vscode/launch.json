@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/WebApi/Website.Api/bin/Debug/netcoreapp2.1/Mt.Website.Api.dll",
+            "program": "${workspaceFolder}/Website.Api/bin/Debug/netcoreapp2.1/Mt.Website.Api.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/WebApi/Website.Api",
+            "cwd": "${workspaceFolder}/Website.Api",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {
@@ -41,13 +41,6 @@
             "type": "coreclr",
             "request": "attach",
             "processId": "${command:pickProcess}"
-        },
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "(Angular) Launch Chrome against localhost",
-            "url": "http://localhost:5000",
-            "webRoot": "${workspaceFolder}/src/Client/Angular"
         }
     ,]
 }

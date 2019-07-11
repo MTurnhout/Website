@@ -5,9 +5,10 @@ import { PostListComponent } from "./post-list/post-list.component";
 import { PostComponent } from "./post/post.component";
 
 import { BlogRoutingModule } from "./blog-routing.module";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   declarations: [BlogComponent, PostListComponent, PostComponent],
-  imports: [CommonModule, BlogRoutingModule]
+  imports: [CommonModule, BlogRoutingModule, SharedModule]
 })
 export class BlogModule {}

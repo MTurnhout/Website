@@ -6,9 +6,8 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
-  title = "mt-website-client";
+  title = "MT";
+  isCollapsed = true;
 
-  ngOnInit(): void {
-    let a = 0;
-  }
+  ngOnInit(): void {}
 }

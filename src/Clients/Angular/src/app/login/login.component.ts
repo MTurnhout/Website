@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { UserProfileService } from "../core/user-profile.service";
 
 @Component({
   selector: "app-login",
@@ -9,7 +10,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 export class LoginComponent implements OnInit {
   formValidation: FormGroup;
 
-  constructor() {}
+  constructor(private userProfileService: UserProfileService) {}
 
   ngOnInit() {
     this.initValidation();

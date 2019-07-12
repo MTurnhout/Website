@@ -1,4 +1,4 @@
-<div class="card" [formGroup]="formValidation">
+<div class="card w-50 mx-auto" [formGroup]="formValidation">
   <div class="card-body">
     <div class="form-group">
       <label>Email address</label>
@@ -8,8 +8,11 @@
       <label>Password</label>
       <input type="password" formControlName="password" class="form-control" placeholder="Password" required />
     </div>
+    <div class="form-group">
+      <re-captcha formControlName="recaptcha" siteKey="6LeOaq0UAAAAAFm6THEVZTNUk6MU76mVA59F9Yj_"></re-captcha>
+    </div>
   </div>
   <div class="card-footer">
-    <a class="btn btn-primary float-right" (click)="login()">Login</a>
+    <button class="btn btn-primary float-right" (click)="login()" [disabled]="formValidation.invalid">Login</button>
   </div>
 </div>

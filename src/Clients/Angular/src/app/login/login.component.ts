@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit {
         Validators.pattern(
           /^(?=.*[\~\!\@\#\$\%\^\&\*\(\)\-\_\=\+])(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\~\!\@\#\$\%\^\&\*\(\)\-\_\=\+]{8,}$/
         )
-      ])
+      ]),
+      recaptcha: new FormControl(null, Validators.required)
     });
   }
 

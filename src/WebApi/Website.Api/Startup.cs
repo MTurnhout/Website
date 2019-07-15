@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Mt.Website.Api.Controllers;
 using Mt.Website.Business;
 
 namespace Mt.Website.Api
@@ -35,9 +36,10 @@ namespace Mt.Website.Api
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddBusinessServices(options => 
+            services.AddBusinessServices(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
             );
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,7 +61,7 @@ namespace Mt.Website.Api
                 context => !context.Request.Path.StartsWithSegments("/api"),
                 HandleSpa
             );
-            
+
             // Api
             app.UseMvc();
         }
@@ -70,7 +72,7 @@ namespace Mt.Website.Api
             app.Run(async (context) =>
             {
                 context.Response.ContentType = "text/html";
-                await context.Response.SendFileAsync(Path.Combine(_environment.WebRootPath,"index.html"));
+                await context.Response.SendFileAsync(Path.Combine(_environment.WebRootPath, "index.html"));
             });
         }
     }

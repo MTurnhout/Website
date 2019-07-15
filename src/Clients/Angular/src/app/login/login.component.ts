@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { UserProfileService } from "../core/user-profile.service";
+import { AuthenticationService } from "./shared/services/authentication.service";
 
 @Component({
   selector: "app-login",
@@ -10,7 +10,7 @@ import { UserProfileService } from "../core/user-profile.service";
 export class LoginComponent implements OnInit {
   formValidation: FormGroup;
 
-  constructor(private userProfileService: UserProfileService) {}
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit() {
     this.initValidation();
@@ -34,5 +34,12 @@ export class LoginComponent implements OnInit {
       this.formValidation.markAllAsTouched();
       return;
     }
+
+    this.authenticationService
+      .login({
+        email: this.formValidation.get("email").value,
+        password: this.formValidation.get("password").value
+      })
+      .subscribe();
   }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Website.Business.Interfaces;
-using Website.Business.Models;
+using Website.Business.Authentication;
+using Website.Business.Authentication.Models;
 
 namespace Mt.Website.Api.Controllers
 {
@@ -10,18 +10,18 @@ namespace Mt.Website.Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IAuthenticationService _authenticationService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IAuthenticationService authenticationService)
         {
-            _userService = userService;
+            _authenticationService = authenticationService;
         }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Post([FromBody] UserCredentials userCredentials)
         {
-            var user = _userService.Authenticate(userCredentials);
+            var user = _authenticationService.Authenticate(userCredentials);
             if (user == null)
                 BadRequest(new { message = "Email or password is incorrect" });
 

@@ -1,4 +1,4 @@
-namespace Website.Business.Models
+namespace Website.Business.Authentication.Models
 {
     public class UserCredentials
     {

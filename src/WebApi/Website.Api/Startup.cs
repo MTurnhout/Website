@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Mt.Website.Api.Controllers;
+using Microsoft.IdentityModel.Tokens;
 using Mt.Website.Business;
+using Website.Business.Settings;
 
 namespace Mt.Website.Api
 {
@@ -36,6 +32,32 @@ namespace Mt.Website.Api
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            // Settings
+            var appSettingsSection = _configuration.GetSection("AppSettings");
+            services.Configure<ApplicationSettings>(appSettingsSection);
+            var applicationSettings = appSettingsSection.Get<ApplicationSettings>();
+
+            // JWT authentication
+            var key = Encoding.ASCII.GetBytes(applicationSettings.JwtSecret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            // Configure database connection
             services.AddBusinessServices(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
             );
@@ -53,6 +75,8 @@ namespace Mt.Website.Api
                 app.UseHsts();
                 app.UseHttpsRedirection();
             }
+
+            app.UseAuthentication();
 
             // Client
             app.UseFileServer();

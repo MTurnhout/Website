@@ -2,8 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Mt.Website.Data;
-using Website.Business.Interfaces;
-using Website.Business.Services;
+using Website.Business.Authentication;
 
 namespace Mt.Website.Business
 {
@@ -15,7 +14,7 @@ namespace Mt.Website.Business
         {
             services.AddDataServices(setDbContextOptions);
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             return services;
         }

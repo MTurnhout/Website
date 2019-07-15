@@ -1,6 +1,6 @@
 using System;
 
-namespace Website.Business.Models
+namespace Website.Business.Authentication.Models
 {
     public class AuthenticatedUserModel
     {

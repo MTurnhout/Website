@@ -1,6 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Website.Business.Interfaces;
+using Website.Business.Models;
 
 namespace Mt.Website.Api.Controllers
 {
@@ -25,41 +26,6 @@ namespace Mt.Website.Api.Controllers
                 BadRequest(new { message = "Email or password is incorrect" });
 
             return Ok(user);
-        }
-    }
-
-    public class UserCredentials
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
-
-    public class AuthenticatedUserModel
-    {
-        public Guid Guid { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Token { get; set; }
-    }
-
-    public interface IUserService
-    {
-        AuthenticatedUserModel Authenticate(UserCredentials userCredentials);
-    }
-
-    public class UserService : IUserService
-    {
-        public AuthenticatedUserModel Authenticate(UserCredentials userCredentials)
-        {
-            return new AuthenticatedUserModel
-            {
-                Guid = Guid.NewGuid(),
-                FirstName = "Martijn",
-                LastName = "Turnhout",
-                Email = "martijnturnhout@example.com",
-                Token = null
-            };
         }
     }
 }

@@ -2,6 +2,8 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Mt.Website.Data;
+using Website.Business.Interfaces;
+using Website.Business.Services;
 
 namespace Mt.Website.Business
 {
@@ -12,6 +14,8 @@ namespace Mt.Website.Business
             Action<DbContextOptionsBuilder> setDbContextOptions)
         {
             services.AddDataServices(setDbContextOptions);
+
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

@@ -39,7 +39,6 @@ namespace Mt.Website.Api
             services.AddBusinessServices(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
             );
-            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,10 +56,13 @@ namespace Mt.Website.Api
 
             // Client
             app.UseFileServer();
+            // In development (debug) client will use another port
+#if !DEBUG
             app.MapWhen(
                 context => !context.Request.Path.StartsWithSegments("/api"),
                 HandleSpa
             );
+#endif
 
             // Api
             app.UseMvc();

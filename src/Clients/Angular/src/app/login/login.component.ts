@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { AuthenticationService } from "./shared/services/authentication.service";
+import { AuthenticationService } from "@core/services";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-login",
@@ -10,7 +11,7 @@ import { AuthenticationService } from "./shared/services/authentication.service"
 export class LoginComponent implements OnInit {
   formValidation: FormGroup;
 
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(private router: Router, private authenticationService: AuthenticationService) {}
 
   ngOnInit() {
     this.initValidation();
@@ -40,6 +41,8 @@ export class LoginComponent implements OnInit {
         email: this.formValidation.get("email").value,
         password: this.formValidation.get("password").value
       })
-      .subscribe();
+      .subscribe(currentUser => {
+        this.router.navigate(["/blog"]);
+      });
   }
 }

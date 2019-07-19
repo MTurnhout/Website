@@ -19,11 +19,11 @@ namespace Mt.Website.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Post([FromBody] UserCredentials userCredentials)
+        public ActionResult<AuthenticatedUserModel> Post([FromBody] UserCredentials userCredentials)
         {
             var user = _authenticationService.Authenticate(userCredentials);
             if (user == null)
-                BadRequest(new { message = "Email or password is incorrect" });
+                BadRequest(new { message = "Credentials are incorrect" });
 
             return Ok(user);
         }

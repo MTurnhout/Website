@@ -4,6 +4,6 @@ namespace Website.Business.Authentication
 {
     public interface IAuthenticationService
     {
-        AuthenticatedUserModel Authenticate(UserCredentials userCredentials);
+        ApplicationUserModel Authenticate(UserCredentials userCredentials);
     }
 }

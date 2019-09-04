@@ -19,9 +19,9 @@
           <a class="nav-item nav-link" routerLinkActive="active" routerLink="/blog">Blog</a>
         </div>
         <div class="navbar-nav ml-auto">
-          <a *ngIf="currentUser" class="nav-item nav-link" routerLinkActive="active" routerLink="/admin">Admin</a>
-          <a *ngIf="!currentUser" class="nav-item nav-link" routerLinkActive="active" routerLink="/login">Login</a>
-          <a *ngIf="currentUser" class="nav-item nav-link" (click)="logout()">Logout</a>
+          <a *ngIf="applicationUser.isAuthenticated" class="nav-item nav-link" routerLinkActive="active" routerLink="/admin">Admin</a>
+          <a *ngIf="!applicationUser.isAuthenticated" class="nav-item nav-link" routerLinkActive="active" routerLink="/login">Login</a>
+          <a *ngIf="applicationUser.isAuthenticated" class="nav-item nav-link" (click)="logout()">Logout</a>
         </div>
       </div>
     </nav>

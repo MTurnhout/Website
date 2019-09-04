@@ -19,7 +19,7 @@ namespace Mt.Website.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public ActionResult<AuthenticatedUserModel> Post([FromBody] UserCredentials userCredentials)
+        public ActionResult<ApplicationUserModel> Post([FromBody] UserCredentials userCredentials)
         {
             var user = _authenticationService.Authenticate(userCredentials);
             if (user == null)

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { AuthenticationService } from "@core/services";
+import { SecurityService } from "@core/services";
 import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
@@ -11,7 +11,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 export class LoginComponent implements OnInit {
   formValidation: FormGroup;
 
-  constructor(private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private securityService: SecurityService) {}
 
   ngOnInit() {
     this.initValidation();
@@ -36,12 +36,12 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authenticationService
+    this.securityService
       .login({
         email: this.formValidation.get("email").value,
         password: this.formValidation.get("password").value
       })
-      .subscribe(currentUser => {
+      .subscribe(() => {
         const returnUrl = this.route.snapshot.queryParams.returnUrl || "/";
         this.router.navigate([returnUrl]);
       });

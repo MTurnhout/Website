@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { AuthenticationService } from "@core/services";
-import { AuthenticatedUserModel } from "@core/models";
+import { SecurityService } from "@core/services";
+import { ApplicationUserModel } from "@core/models";
 
 @Component({
   selector: "app-root",
@@ -11,17 +11,16 @@ import { AuthenticatedUserModel } from "@core/models";
 export class AppComponent implements OnInit {
   title = "MT";
   isCollapsed = true;
-  currentUser: AuthenticatedUserModel;
+  applicationUser: ApplicationUserModel;
 
-  constructor(private router: Router, private authenticationService: AuthenticationService) {
-    this.currentUser = authenticationService.currentUser;
-    authenticationService.currentUserObservable.subscribe(currentUser => (this.currentUser = currentUser));
+  constructor(private router: Router, private securityService: SecurityService) {
+    this.applicationUser = securityService.applicationUser;
   }
 
   ngOnInit(): void {}
 
   logout() {
-    this.authenticationService.logout();
-    this.router.navigate(["/login"]);
+    this.securityService.logout();
+    this.router.navigate(["/"]);
   }
 }

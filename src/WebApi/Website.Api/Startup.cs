@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -33,12 +34,13 @@ namespace Mt.Website.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Settings
-            var appSettingsSection = _configuration.GetSection("AppSettings");
-            services.Configure<ApplicationSettings>(appSettingsSection);
-            var applicationSettings = appSettingsSection.Get<ApplicationSettings>();
+            services.Configure<ApplicationSettings>(_configuration.GetSection("AppSettings"));
+
+            var jwtSettingsSection = _configuration.GetSection("JwtSettings");
+            services.Configure<JwtSettings>(jwtSettingsSection);
+            var jwtSettings = jwtSettingsSection.Get<JwtSettings>();
 
             // JWT authentication
-            var key = Encoding.ASCII.GetBytes(applicationSettings.JwtSecret);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -51,9 +53,14 @@ namespace Mt.Website.Api
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.ASCII.GetBytes(jwtSettings.Key)),
                     ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidateAudience = false,
+                    ValidAudience = jwtSettings.Audience,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromMinutes(jwtSettings.MinutesToExpiration)
                 };
             });
 

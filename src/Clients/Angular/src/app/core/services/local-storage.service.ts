@@ -13,8 +13,6 @@ export class LocalStorageService {
     if (!this.userKeys) {
       this.userKeys = [];
     }
-
-    // TODO: Clear user data if another user logged in
   }
 
   /**

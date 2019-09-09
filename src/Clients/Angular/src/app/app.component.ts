@@ -19,8 +19,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  logout() {
+  logout(event: MouseEvent) {
     this.securityService.logout();
     this.router.navigate(["/"]);
+
+    event.preventDefault();
   }
 }

@@ -1,20 +1,20 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { AuthenticationGuard } from "@core/guards";
+import { AuthenticationGuard } from "@core/security";
 
 const routes: Routes = [
   { path: "", redirectTo: "/blog", pathMatch: "full" },
   {
     path: "blog",
-    loadChildren: () => import("./blog/blog.module").then(mod => mod.BlogModule)
+    loadChildren: () => import("./pages/blog/blog.module").then(mod => mod.BlogModule)
   },
   {
     path: "login",
-    loadChildren: () => import("./login/login.module").then(mod => mod.LoginModule)
+    loadChildren: () => import("./pages/login/login.module").then(mod => mod.LoginModule)
   },
   {
     path: "admin",
-    loadChildren: () => import("./admin/admin.module").then(mod => mod.AdminModule),
+    loadChildren: () => import("./pages/admin/admin.module").then(mod => mod.AdminModule),
     canActivate: [AuthenticationGuard]
   },
   { path: "**", redirectTo: "/blog" }

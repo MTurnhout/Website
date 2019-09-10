@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { SecurityService } from "@core/services";
+import { SecurityService } from "../services/security.service";
 
 /**
  * Add authorization header with jwt token if available

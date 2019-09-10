@@ -4,14 +4,14 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { JwtInterceptor, ErrorInterceptor } from "@core/interceptors";
+import { JwtInterceptor, UnauthorizedErrorInterceptor } from "@core/security";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [NgbModule, BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

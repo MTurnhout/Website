@@ -2,9 +2,10 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
-import { LocalStorageService } from "./local-storage.service";
-import { ApiService } from "./api-service";
-import { ApplicationUserModel, UserCredentialsModel } from "../models";
+import { ApiService } from "@core/abstraction";
+import { LocalStorageService } from "@core/local-storage";
+import { ApplicationUserModel } from "../models/application-user.model";
+import { UserCredentialsModel } from "../models/user-credentials.model";
 
 @Injectable({
   providedIn: "root"

@@ -18,6 +18,9 @@ namespace Website.Api.ReCaptcha
 
         public bool Validate(string responseToken, string remoteIp = null)
         {
+            if (!_reCaptchaSettings.IsEnabled)
+                return true;
+
             try
             {
                 var values = new NameValueCollection

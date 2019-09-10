@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { SecurityService } from "@core/security";
 import { environment } from "@environments/environment";
+import { ToastService } from "@core/toast";
 
 @Component({
   selector: "app-login",
@@ -13,7 +14,12 @@ export class LoginComponent implements OnInit {
   formValidation: FormGroup;
   recaptchaSiteKey: string;
 
-  constructor(private route: ActivatedRoute, private router: Router, private securityService: SecurityService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private securityService: SecurityService,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit() {
     this.initValidation();
@@ -45,9 +51,14 @@ export class LoginComponent implements OnInit {
         password: this.formValidation.get("password").value,
         recaptcha: this.formValidation.get("recaptcha").value
       })
-      .subscribe(() => {
-        const returnUrl = this.route.snapshot.queryParams.returnUrl || "/";
-        this.router.navigate([returnUrl]);
-      });
+      .subscribe(
+        () => {
+          const returnUrl = this.route.snapshot.queryParams.returnUrl || "/";
+          this.router.navigate([returnUrl]);
+        },
+        error => {
+          this.toastService.showError(error);
+        }
+      );
   }
 }

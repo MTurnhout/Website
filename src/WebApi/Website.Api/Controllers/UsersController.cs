@@ -34,11 +34,11 @@ namespace Mt.Website.Api.Controllers
             var remoteIp = _accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
             var validReCaptcha = _reCaptchaService.Validate(userCredentials.Recaptcha, remoteIp);
             if (!validReCaptcha)
-                BadRequest(new { message = "Invalid ReCaptcha" });
+                return BadRequest(new { message = "Invalid ReCaptcha" });
 
             var user = _authenticationService.Authenticate(userCredentials);
             if (user == null)
-                BadRequest(new { message = "Credentials are incorrect" });
+                return BadRequest(new { message = "Credentials are incorrect" });
 
             return Ok(user);
         }

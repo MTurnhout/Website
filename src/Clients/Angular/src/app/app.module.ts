@@ -5,9 +5,10 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { JwtInterceptor, UnauthorizedErrorInterceptor } from "@core/security";
+import { ToastsContainerComponent } from "@core/toast";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ToastsContainerComponent],
   imports: [NgbModule, BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

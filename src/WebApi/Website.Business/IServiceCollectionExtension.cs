@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Mt.Website.Data;
 using Website.Business.Authentication;
 
-namespace Mt.Website.Business
+namespace Website.Business
 {
     public static class IServiceCollectionExtension
     {

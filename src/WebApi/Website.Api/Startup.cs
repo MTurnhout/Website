@@ -10,7 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Mt.Website.Business;
+using Website.Api;
+using Website.Api.ReCaptcha;
+using Website.Business;
 using Website.Business.Settings;
 
 namespace Mt.Website.Api
@@ -35,6 +37,7 @@ namespace Mt.Website.Api
 
             // Settings
             services.Configure<ApplicationSettings>(_configuration.GetSection("AppSettings"));
+            services.Configure<ReCaptchaSettings>(_configuration.GetSection("Recaptcha"));
 
             var jwtSettingsSection = _configuration.GetSection("JwtSettings");
             services.Configure<JwtSettings>(jwtSettingsSection);
@@ -68,6 +71,8 @@ namespace Mt.Website.Api
             services.AddBusinessServices(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
             );
+
+            services.AddApiServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

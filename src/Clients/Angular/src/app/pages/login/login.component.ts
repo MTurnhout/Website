@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { SecurityService } from "@core/security";
+import { environment } from "@environments/environment";
 
 @Component({
   selector: "app-login",
@@ -10,11 +11,13 @@ import { SecurityService } from "@core/security";
 })
 export class LoginComponent implements OnInit {
   formValidation: FormGroup;
+  recaptchaSiteKey: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private securityService: SecurityService) {}
 
   ngOnInit() {
     this.initValidation();
+    this.recaptchaSiteKey = environment.recaptchaSiteKey;
   }
 
   initValidation() {
@@ -39,7 +42,8 @@ export class LoginComponent implements OnInit {
     this.securityService
       .login({
         email: this.formValidation.get("email").value,
-        password: this.formValidation.get("password").value
+        password: this.formValidation.get("password").value,
+        recaptcha: this.formValidation.get("recaptcha").value
       })
       .subscribe(() => {
         const returnUrl = this.route.snapshot.queryParams.returnUrl || "/";

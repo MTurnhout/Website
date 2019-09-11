@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using Website.Business.Authentication.Enums;
+
 namespace Website.Business.Authentication.Models
 {
     public class ApplicationUserModel
@@ -9,5 +12,7 @@ namespace Website.Business.Authentication.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+
+        public List<ApplicationClaimType> Claims { get; set; }
     }
 }

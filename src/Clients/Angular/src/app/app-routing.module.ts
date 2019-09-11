@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { AuthenticationGuard } from "@core/security";
+import { AuthenticationGuard, ApplicationClaimType } from "@core/security";
 
 const routes: Routes = [
   { path: "", redirectTo: "/blog", pathMatch: "full" },
@@ -15,7 +15,8 @@ const routes: Routes = [
   {
     path: "admin",
     loadChildren: () => import("./pages/admin/admin.module").then(mod => mod.AdminModule),
-    canActivate: [AuthenticationGuard]
+    canActivate: [AuthenticationGuard],
+    data: { claimType: ApplicationClaimType.CanViewAdminPage }
   },
   { path: "**", redirectTo: "/blog" }
 ];

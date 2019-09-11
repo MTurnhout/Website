@@ -11,7 +11,7 @@ import { SecurityService } from "../services/security.service";
 export class UnauthorizedErrorInterceptor implements HttpInterceptor {
   constructor(private securityService: SecurityService) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError(err => {
         if (err.status === 401) {

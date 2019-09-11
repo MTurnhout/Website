@@ -19,7 +19,9 @@
           <a class="nav-item nav-link" routerLinkActive="active" routerLink="/blog">Blog</a>
         </div>
         <div class="navbar-nav ml-auto">
-          <a *ngIf="applicationUser.isAuthenticated" class="nav-item nav-link" routerLinkActive="active" routerLink="/admin">Admin</a>
+          <a *appHasClaim="ApplicationClaimType.CanViewAdminPage" class="nav-item nav-link" routerLinkActive="active" routerLink="/admin"
+            >Admin</a
+          >
           <a *ngIf="!applicationUser.isAuthenticated" class="nav-item nav-link" routerLinkActive="active" routerLink="/login">Login</a>
           <a *ngIf="applicationUser.isAuthenticated" class="nav-item nav-link" href="logout" (click)="logout($event)">Logout</a>
         </div>

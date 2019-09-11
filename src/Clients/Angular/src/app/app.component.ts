@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { SecurityService, ApplicationUserModel } from "@core/security";
+import { SecurityService, ApplicationUserModel, ApplicationClaimType } from "@core/security";
 
 @Component({
   selector: "app-root",
@@ -8,17 +8,19 @@ import { SecurityService, ApplicationUserModel } from "@core/security";
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
-  title = "MT";
-  isCollapsed = true;
-  applicationUser: ApplicationUserModel;
+  public title = "MT";
+  public isCollapsed = true;
+  public applicationUser: ApplicationUserModel;
+
+  public ApplicationClaimType = ApplicationClaimType;
 
   constructor(private router: Router, private securityService: SecurityService) {
     this.applicationUser = securityService.applicationUser;
   }
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 
-  logout(event: MouseEvent) {
+  public logout(event: MouseEvent) {
     this.securityService.logout();
     this.router.navigate(["/"]);
 

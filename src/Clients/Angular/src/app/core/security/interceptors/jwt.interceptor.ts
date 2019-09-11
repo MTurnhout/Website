@@ -10,7 +10,7 @@ import { SecurityService } from "../services/security.service";
 export class JwtInterceptor implements HttpInterceptor {
   constructor(private securityService: SecurityService) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const applicationUser = this.securityService.applicationUser;
     if (applicationUser && applicationUser.bearerToken) {
       request = request.clone({

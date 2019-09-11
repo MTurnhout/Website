@@ -6,9 +6,10 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { JwtInterceptor, UnauthorizedErrorInterceptor } from "@core/security";
 import { ToastsContainerComponent } from "@core/toast";
+import { HasClaimDirective } from "./core/security/directives/has-claim.directive";
 
 @NgModule({
-  declarations: [AppComponent, ToastsContainerComponent],
+  declarations: [AppComponent, ToastsContainerComponent, HasClaimDirective],
   imports: [NgbModule, BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

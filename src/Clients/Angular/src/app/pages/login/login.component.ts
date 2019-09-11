@@ -11,8 +11,8 @@ import { ToastService } from "@core/toast";
   styleUrls: ["./login.component.scss"]
 })
 export class LoginComponent implements OnInit {
-  formValidation: FormGroup;
-  recaptchaSiteKey: string;
+  public formValidation: FormGroup;
+  public recaptchaSiteKey: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,12 +21,12 @@ export class LoginComponent implements OnInit {
     private toastService: ToastService
   ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.initValidation();
     this.recaptchaSiteKey = environment.recaptchaSiteKey;
   }
 
-  initValidation() {
+  public initValidation() {
     this.formValidation = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login() {
+  public login() {
     if (!this.formValidation.valid) {
       this.formValidation.markAllAsTouched();
       return;

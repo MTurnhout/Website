@@ -8,5 +8,5 @@ import { Component, OnInit } from "@angular/core";
 export class PostListComponent implements OnInit {
   constructor() {}
 
-  ngOnInit() {}
+  public ngOnInit() {}
 }

@@ -6,11 +6,11 @@ import { ApplicationClaimType } from "../enums/application-claim-type.enum";
   selector: "[appHasClaim]"
 })
 export class HasClaimDirective {
-  private claimType: ApplicationClaimType;
+  private claimTypes: ApplicationClaimType[];
 
   @Input()
-  public set appHasClaim(claimType: ApplicationClaimType) {
-    this.claimType = claimType;
+  public set appHasClaim(claimType: ApplicationClaimType | ApplicationClaimType[]) {
+    this.claimTypes = Array.isArray(claimType) ? claimType : [claimType];
     this.validateClaim();
   }
 
@@ -19,7 +19,7 @@ export class HasClaimDirective {
   }
 
   private validateClaim() {
-    if (this.securityService.hasClaim(this.claimType)) {
+    if (this.securityService.hasClaim(this.claimTypes)) {
       this.viewContainer.createEmbeddedView(this.templateRef);
     } else {
       this.viewContainer.clear();

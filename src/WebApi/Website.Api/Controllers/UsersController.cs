@@ -42,5 +42,13 @@ namespace Mt.Website.Api.Controllers
 
             return Ok(user);
         }
+
+        [HttpGet("restore")]
+        public ActionResult<ApplicationUserModel> RestoreSession()
+        {
+            var user = _authenticationService.Restore(User);
+
+            return Ok(user);
+        }
     }
 }

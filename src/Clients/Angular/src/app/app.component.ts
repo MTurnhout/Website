@@ -18,7 +18,9 @@ export class AppComponent implements OnInit {
     this.applicationUser = securityService.applicationUser;
   }
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+    this.securityService.restoreSession();
+  }
 
   public logout(event: MouseEvent) {
     this.securityService.logout();

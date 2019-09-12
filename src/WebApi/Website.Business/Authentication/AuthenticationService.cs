@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
@@ -15,6 +14,7 @@ namespace Website.Business.Authentication
     public class AuthenticationService : IAuthenticationService
     {
         private readonly JwtSettings _jwtSettings;
+        private Guid _userGuid = new Guid("2ef201ca-14e3-4f45-a435-587cb355e82d");
 
         public AuthenticationService(IOptions<JwtSettings> jwtSettings)
         {
@@ -23,25 +23,16 @@ namespace Website.Business.Authentication
 
         public ApplicationUserModel Authenticate(UserCredentials userCredentials)
         {
-            var authenticationModel = new ApplicationUserModel
-            {
-                UserName = "MTurnhout",
-                FirstName = "Martijn",
-                LastName = "Turnhout",
-                Email = "martijnturnhout@example.com",
-                IsAuthenticated = true,
-                Claims = new List<ApplicationClaimType>()
-            };
+            var authenticationModel = GetUserModel();
 
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, authenticationModel.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, _userGuid.ToString()),
             };
 
-            foreach (ApplicationClaimType claimType in Enum.GetValues(typeof(ApplicationClaimType)))
+            foreach (ApplicationClaimType claimType in authenticationModel.Claims)
             {
-                authenticationModel.Claims.Add(claimType);
                 claims.Add(new Claim(claimType.ToString(), "true"));
             }
 
@@ -59,6 +50,39 @@ namespace Website.Business.Authentication
                         new SymmetricSecurityKey(key),
                         SecurityAlgorithms.HmacSha256Signature)
                 }));
+
+            return authenticationModel;
+        }
+
+        public ApplicationUserModel Restore(ClaimsPrincipal user)
+        {
+            var userGuid = user?.FindFirstValue(JwtRegisteredClaimNames.Jti);
+            if (string.IsNullOrEmpty(userGuid))
+                return null;
+
+            var authenticationModel = GetUserModel();
+
+
+
+            return authenticationModel;
+        }
+
+        private ApplicationUserModel GetUserModel()
+        {
+            var authenticationModel = new ApplicationUserModel
+            {
+                UserName = "MTurnhout",
+                FirstName = "Martijn",
+                LastName = "Turnhout",
+                Email = "martijnturnhout@example.com",
+                IsAuthenticated = true,
+                Claims = new List<ApplicationClaimType>()
+            };
+
+            foreach (ApplicationClaimType claimType in Enum.GetValues(typeof(ApplicationClaimType)))
+            {
+                authenticationModel.Claims.Add(claimType);
+            }
 
             return authenticationModel;
         }

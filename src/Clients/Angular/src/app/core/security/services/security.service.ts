@@ -22,10 +22,8 @@ export class SecurityService extends ApiService {
   public login(userCredentials: UserCredentialsModel): Observable<ApplicationUserModel> {
     return this.post<ApplicationUserModel>(userCredentials, "/authenticate").pipe(
       map(user => {
-        Object.assign(this.applicationUser, user);
         this.localStorage.setUserItem("bearerToken", user.bearerToken);
-
-        this.applicationUserChanged.emit(this.applicationUser);
+        this.updateUser(user);
 
         return user;
       })
@@ -33,13 +31,38 @@ export class SecurityService extends ApiService {
   }
 
   public logout() {
-    Object.assign(this.applicationUser, new ApplicationUserModel());
     this.localStorage.clearUserItems();
-
-    this.applicationUserChanged.emit(this.applicationUser);
+    this.updateUser(new ApplicationUserModel());
   }
 
-  public hasClaim(claim: ApplicationClaimType) {
-    return this.applicationUser && this.applicationUser.claims.includes(claim);
+  public hasClaim(claim: ApplicationClaimType | ApplicationClaimType[]) {
+    if (Array.isArray(claim)) {
+      return this.applicationUser.claims.some(c => claim.includes(c));
+    } else {
+      return this.applicationUser.claims.includes(claim);
+    }
+  }
+
+  public restoreSession() {
+    const bearerToken = this.getBearerToken();
+
+    if (bearerToken) {
+      this.get<ApplicationUserModel>("/restore").subscribe(applicationUser => {
+        if (applicationUser) {
+          this.updateUser(applicationUser);
+        } else {
+          this.logout();
+        }
+      });
+    }
+  }
+
+  public getBearerToken(): string {
+    return this.applicationUser.bearerToken ? this.applicationUser.bearerToken : this.localStorage.getItem("bearerToken");
+  }
+
+  private updateUser(applicationUser: ApplicationUserModel) {
+    Object.assign(this.applicationUser, applicationUser);
+    this.applicationUserChanged.emit(this.applicationUser);
   }
 }

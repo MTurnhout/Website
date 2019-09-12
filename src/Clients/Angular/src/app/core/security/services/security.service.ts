@@ -19,8 +19,13 @@ export class SecurityService extends ApiService {
     super(http, "users");
   }
 
-  public login(userCredentials: UserCredentialsModel): Observable<ApplicationUserModel> {
-    return this.post<ApplicationUserModel>(userCredentials, "/authenticate").pipe(
+  public login(
+    userCredentials: UserCredentialsModel
+  ): Observable<ApplicationUserModel> {
+    return this.post<ApplicationUserModel>(
+      userCredentials,
+      "/authenticate"
+    ).pipe(
       map(user => {
         this.localStorage.setUserItem("bearerToken", user.bearerToken);
         this.updateUser(user);
@@ -58,7 +63,9 @@ export class SecurityService extends ApiService {
   }
 
   public getBearerToken(): string {
-    return this.applicationUser.bearerToken ? this.applicationUser.bearerToken : this.localStorage.getItem("bearerToken");
+    return this.applicationUser.bearerToken
+      ? this.applicationUser.bearerToken
+      : this.localStorage.getItem("bearerToken");
   }
 
   private updateUser(applicationUser: ApplicationUserModel) {

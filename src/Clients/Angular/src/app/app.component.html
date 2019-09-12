@@ -14,16 +14,44 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup" [ngbCollapse]="isCollapsed">
+      <div
+        class="collapse navbar-collapse justify-content-center"
+        id="navbarNavAltMarkup"
+        [ngbCollapse]="isCollapsed"
+      >
         <div class="navbar-nav">
-          <a class="nav-item nav-link" routerLinkActive="active" routerLink="/blog">Blog</a>
+          <a
+            class="nav-item nav-link"
+            routerLinkActive="active"
+            routerLink="/blog"
+            (click)="isCollapsed = true"
+            >Blog</a
+          >
         </div>
         <div class="navbar-nav ml-auto">
-          <a *appHasClaim="ApplicationClaimType.CanViewAdminPage" class="nav-item nav-link" routerLinkActive="active" routerLink="/admin"
+          <a
+            *appHasClaim="ApplicationClaimType.CanViewAdminPage"
+            class="nav-item nav-link"
+            routerLinkActive="active"
+            routerLink="/admin"
+            (click)="isCollapsed = true"
             >Admin</a
           >
-          <a *ngIf="!applicationUser.isAuthenticated" class="nav-item nav-link" routerLinkActive="active" routerLink="/login">Login</a>
-          <a *ngIf="applicationUser.isAuthenticated" class="nav-item nav-link" href="logout" (click)="logout($event)">Logout</a>
+          <a
+            *ngIf="!applicationUser.isAuthenticated"
+            class="nav-item nav-link"
+            routerLinkActive="active"
+            routerLink="/login"
+            (click)="isCollapsed = true"
+            >Login</a
+          >
+          <a
+            *ngIf="applicationUser.isAuthenticated"
+            class="nav-item nav-link"
+            href="logout"
+            (click)="logout($event); isCollapsed = true"
+            >Logout</a
+          >
         </div>
       </div>
     </nav>

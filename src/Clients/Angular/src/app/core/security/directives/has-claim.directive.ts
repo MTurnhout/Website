@@ -9,13 +9,21 @@ export class HasClaimDirective {
   private claimTypes: ApplicationClaimType[];
 
   @Input()
-  public set appHasClaim(claimType: ApplicationClaimType | ApplicationClaimType[]) {
+  public set appHasClaim(
+    claimType: ApplicationClaimType | ApplicationClaimType[]
+  ) {
     this.claimTypes = Array.isArray(claimType) ? claimType : [claimType];
     this.validateClaim();
   }
 
-  constructor(private templateRef: TemplateRef<any>, private viewContainer: ViewContainerRef, private securityService: SecurityService) {
-    securityService.applicationUserChanged.subscribe(() => this.validateClaim());
+  constructor(
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef,
+    private securityService: SecurityService
+  ) {
+    securityService.applicationUserChanged.subscribe(() =>
+      this.validateClaim()
+    );
   }
 
   private validateClaim() {

@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { ApiService } from "@core/abstraction";
 import { LocalStorageService } from "@core/local-storage";
 import { ApplicationUserModel } from "../models/application-user.model";
@@ -19,13 +19,8 @@ export class SecurityService extends ApiService {
     super(http, "users");
   }
 
-  public login(
-    userCredentials: UserCredentialsModel
-  ): Observable<ApplicationUserModel> {
-    return this.post<ApplicationUserModel>(
-      userCredentials,
-      "/authenticate"
-    ).pipe(
+  public login(userCredentials: UserCredentialsModel): Observable<ApplicationUserModel> {
+    return this.post<ApplicationUserModel>(userCredentials, "/authenticate").pipe(
       map(user => {
         this.localStorage.setUserItem("bearerToken", user.bearerToken);
         this.updateUser(user);
@@ -48,24 +43,27 @@ export class SecurityService extends ApiService {
     }
   }
 
-  public restoreSession() {
+  public restoreSession(): Observable<ApplicationUserModel> {
     const bearerToken = this.getBearerToken();
+    if (!bearerToken) {
+      return of(this.applicationUser);
+    }
 
-    if (bearerToken) {
-      this.get<ApplicationUserModel>("/restore").subscribe(applicationUser => {
+    return this.get<ApplicationUserModel>("/restore").pipe(
+      map(applicationUser => {
         if (applicationUser) {
           this.updateUser(applicationUser);
         } else {
           this.logout();
         }
-      });
-    }
+
+        return this.applicationUser;
+      })
+    );
   }
 
   public getBearerToken(): string {
-    return this.applicationUser.bearerToken
-      ? this.applicationUser.bearerToken
-      : this.localStorage.getItem("bearerToken");
+    return this.applicationUser.bearerToken ? this.applicationUser.bearerToken : this.localStorage.getItem("bearerToken");
   }
 
   private updateUser(applicationUser: ApplicationUserModel) {

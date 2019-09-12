@@ -70,11 +70,7 @@ export abstract class ApiService {
   }
 
   private handleError(error: any): Observable<never> {
-    const errorMessage = error.message
-      ? error.message
-      : error.status
-      ? `${error.status} - ${error.statusText}`
-      : "Server error";
+    const errorMessage = error.message ? error.message : error.status ? `${error.status} - ${error.statusText}` : "Server error";
 
     console.error(errorMessage);
     return throwError(error);

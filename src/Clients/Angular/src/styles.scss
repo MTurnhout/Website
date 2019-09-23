@@ -3,6 +3,6 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "./scss/bootswatch";
 
-input.ng-touched.ng-invalid {
-  border-color: #f44336 !important;
+.ng-touched.ng-invalid {
+  @extend .is-invalid;
 }

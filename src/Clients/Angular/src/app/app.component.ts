@@ -26,4 +26,12 @@ export class AppComponent implements OnInit {
 
     event.preventDefault();
   }
+
+  public toggleNavigationBar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
+
+  public collapseNavigationBar() {
+    this.isCollapsed = true;
+  }
 }

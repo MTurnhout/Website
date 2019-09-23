@@ -5,7 +5,7 @@
       <button
         class="navbar-toggler"
         type="button"
-        (click)="isCollapsed = !isCollapsed"
+        (click)="toggleNavigationBar()"
         data-toggle="collapse"
         data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup"
@@ -16,7 +16,7 @@
       </button>
       <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup" [ngbCollapse]="isCollapsed">
         <div class="navbar-nav">
-          <a class="nav-item nav-link" routerLinkActive="active" routerLink="/blog" (click)="isCollapsed = true">Blog</a>
+          <a class="nav-item nav-link" routerLinkActive="active" routerLink="/blog" (click)="collapseNavigationBar()">Blog</a>
         </div>
         <div class="navbar-nav ml-auto">
           <a
@@ -24,7 +24,7 @@
             class="nav-item nav-link"
             routerLinkActive="active"
             routerLink="/admin"
-            (click)="isCollapsed = true"
+            (click)="collapseNavigationBar()"
             >Admin</a
           >
           <a
@@ -32,10 +32,14 @@
             class="nav-item nav-link"
             routerLinkActive="active"
             routerLink="/login"
-            (click)="isCollapsed = true"
+            (click)="collapseNavigationBar()"
             >Login</a
           >
-          <a *ngIf="applicationUser.isAuthenticated" class="nav-item nav-link" href="logout" (click)="logout($event); isCollapsed = true"
+          <a
+            *ngIf="applicationUser.isAuthenticated"
+            class="nav-item nav-link"
+            href="logout"
+            (click)="logout($event); collapseNavigationBar()"
             >Logout</a
           >
         </div>

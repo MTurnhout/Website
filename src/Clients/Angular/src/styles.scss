@@ -1,10 +1,7 @@
 // Bootstrap
-@import "scss/monotony.theme.scss";
-
-$body-bg: #1e1e1e;
-$body-color: #d4d4d4;
-
+@import "./scss/variables";
 @import "../node_modules/bootstrap/scss/bootstrap";
+@import "./scss/bootswatch";
 
 input.ng-touched.ng-invalid {
   border-color: #f44336 !important;

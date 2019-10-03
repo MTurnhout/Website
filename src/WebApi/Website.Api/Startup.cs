@@ -21,11 +21,13 @@ namespace Mt.Website.Api
     public class Startup
     {
         private IConfiguration _configuration { get; }
+        private IWebHostEnvironment _environment { get; }
 
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             _configuration = configuration;
+            _environment = environment;
         }
 
 
@@ -75,9 +77,9 @@ namespace Mt.Website.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (_environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -109,12 +111,12 @@ namespace Mt.Website.Api
         }
 
 
-        private void HandleSpa(IApplicationBuilder app, IWebHostEnvironment env)
+        private void HandleSpa(IApplicationBuilder app)
         {
             app.Run(async (context) =>
             {
                 context.Response.ContentType = "text/html";
-                await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
+                await context.Response.SendFileAsync(Path.Combine(_environment.WebRootPath, "index.html"));
             });
         }
     }

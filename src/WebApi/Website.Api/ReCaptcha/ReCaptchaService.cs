@@ -2,8 +2,8 @@ using System;
 using System.Collections.Specialized;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
 namespace Website.Api.ReCaptcha
 {
@@ -37,7 +37,7 @@ namespace Website.Api.ReCaptcha
                 using (var client = new WebClient())
                 {
                     var response = client.UploadValues(_reCaptchaSettings.ValidationUrl, values);
-                    var result = JsonConvert.DeserializeObject<ReCaptchaResponseModel>(Encoding.UTF8.GetString(response));
+                    var result = JsonSerializer.Deserialize<ReCaptchaResponseModel>(Encoding.UTF8.GetString(response));
 
                     return result.Success;
                 }

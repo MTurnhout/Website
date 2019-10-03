@@ -10,7 +10,7 @@
       "request": "launch",
       "preLaunchTask": "build",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/Website.Api/bin/Debug/netcoreapp2.2/Mt.Website.Api.dll",
+      "program": "${workspaceFolder}/Website.Api/bin/Debug/netcoreapp3.0/Mt.Website.Api.dll",
       "args": [],
       "cwd": "${workspaceFolder}/Website.Api",
       "stopAtEntry": false,

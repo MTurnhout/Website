@@ -1,16 +1,16 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Website.Api.ReCaptcha
 {
     public class ReCaptchaRequestModel
     {
-        [JsonProperty("secret")]
+        [JsonPropertyName("secret")]
         public string Secret { get; set; }
 
-        [JsonProperty("response")]
+        [JsonPropertyName("response")]
         public string Response { get; set; }
 
-        [JsonProperty("remoteip")]
+        [JsonPropertyName("remoteip")]
         public string RemoteIp { get; set; }
     }
 }

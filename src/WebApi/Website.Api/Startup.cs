@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Website.Api;
 using Website.Api.ReCaptcha;
@@ -19,21 +20,19 @@ namespace Mt.Website.Api
 {
     public class Startup
     {
-        private readonly IConfiguration _configuration;
-        private readonly IHostingEnvironment _environment;
+        private IConfiguration _configuration { get; }
 
 
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        public Startup(IConfiguration configuration)
         {
             _configuration = configuration;
-            _environment = environment;
         }
 
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddControllers();
 
             // Settings
             services.Configure<ApplicationSettings>(_configuration.GetSection("AppSettings"));
@@ -76,9 +75,9 @@ namespace Mt.Website.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (_environment.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -88,10 +87,8 @@ namespace Mt.Website.Api
                 app.UseHttpsRedirection();
             }
 
-            app.UseAuthentication();
-
             // Client
-            app.UseFileServer();
+            app.UseStaticFiles();
             // In development (debug) client will use another port
 #if !DEBUG
             app.MapWhen(
@@ -99,18 +96,25 @@ namespace Mt.Website.Api
                 HandleSpa
             );
 #endif
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             // Api
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
 
 
-        private void HandleSpa(IApplicationBuilder app)
+        private void HandleSpa(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.Run(async (context) =>
             {
                 context.Response.ContentType = "text/html";
-                await context.Response.SendFileAsync(Path.Combine(_environment.WebRootPath, "index.html"));
+                await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
             });
         }
     }

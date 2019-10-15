@@ -79,18 +79,27 @@ namespace Mt.Website.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
+            int cachePeriod;
             if (_environment.IsDevelopment())
             {
+                cachePeriod = 600;
                 app.UseDeveloperExceptionPage();
             }
             else
             {
+                cachePeriod = 604800;
                 app.UseHsts();
                 app.UseHttpsRedirection();
             }
 
             // Client
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
+                }
+            });
             // In development (debug) client will use another port
 #if !DEBUG
             app.MapWhen(

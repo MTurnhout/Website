@@ -8,7 +8,6 @@ using Website.Business.Authentication.Models;
 
 namespace Mt.Website.Api.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase

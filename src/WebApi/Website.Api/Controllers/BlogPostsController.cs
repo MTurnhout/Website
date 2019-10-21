@@ -5,7 +5,6 @@ using Website.Business.Blog.Models;
 
 namespace Mt.Website.Api.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BlogPostsController : ControllerBase

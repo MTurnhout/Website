@@ -2,10 +2,12 @@
 using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,8 +36,6 @@ namespace Mt.Website.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-
             // Settings
             services.Configure<ApplicationSettings>(_configuration.GetSection("AppSettings"));
             services.Configure<ReCaptchaSettings>(_configuration.GetSection("Recaptcha"));
@@ -73,7 +73,14 @@ namespace Mt.Website.Api
                 options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
             );
 
-            services.AddApiServices();
+            // API
+            services.AddControllers(o =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                o.Filters.Add(new AuthorizeFilter(policy));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,7 +119,7 @@ namespace Mt.Website.Api
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // Api
+            // API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

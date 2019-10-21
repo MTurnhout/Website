@@ -81,6 +81,8 @@ namespace Mt.Website.Api
                     .Build();
                 o.Filters.Add(new AuthorizeFilter(policy));
             });
+
+            services.AddApiServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

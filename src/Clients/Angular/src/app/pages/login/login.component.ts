@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { SecurityService } from "@core/security";
 import { environment } from "@environments/environment";
 import { ToastService } from "@core/toast";
+import { AuthenticationType } from "@core/security/enums/authentication-type.enum";
 
 @Component({
   selector: "app-login",
@@ -13,13 +14,16 @@ import { ToastService } from "@core/toast";
 export class LoginComponent implements OnInit {
   public formValidation: FormGroup;
   public recaptchaSiteKey: string;
+  public readonly azureAdAuthenticationEnabled: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private securityService: SecurityService,
     private toastService: ToastService
-  ) {}
+  ) {
+    this.azureAdAuthenticationEnabled = environment.azureAdSettings.enabled;
+  }
 
   public ngOnInit() {
     this.initValidation();
@@ -60,5 +64,21 @@ export class LoginComponent implements OnInit {
           this.toastService.showError(error);
         }
       );
+  }
+
+  public azureAdLogin() {
+    this.externalLogin(AuthenticationType.AzureAd);
+  }
+
+  private externalLogin(authenticationType: AuthenticationType) {
+    this.securityService.externalLogin(authenticationType).then(
+      () => {
+        const returnUrl = this.route.snapshot.queryParams.returnUrl || "/";
+        this.router.navigate([returnUrl]);
+      },
+      error => {
+        this.toastService.showError(error);
+      }
+    );
   }
 }

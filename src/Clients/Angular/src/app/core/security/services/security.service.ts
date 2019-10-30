@@ -7,6 +7,11 @@ import { LocalStorageService } from "@core/local-storage";
 import { ApplicationUserModel } from "../models/application-user.model";
 import { UserCredentialsModel } from "../models/user-credentials.model";
 import { ApplicationClaimType } from "../enums/application-claim-type.enum";
+import { AzureAdAuthenticationService } from "./azure-ad-authentication.service";
+import { AuthenticationType } from "../enums/authentication-type.enum";
+import { LocalStorageKeys } from "@core/local-storage-keys";
+import { ExternalAuthentication } from "../interfaces/external-authentication";
+import { environment } from "@environments/environment.prod";
 
 @Injectable({
   providedIn: "root"
@@ -15,14 +20,19 @@ export class SecurityService extends ApiService {
   public applicationUser = new ApplicationUserModel();
   public applicationUserChanged = new EventEmitter<ApplicationUserModel>();
 
-  constructor(http: HttpClient, private localStorage: LocalStorageService) {
+  constructor(
+    http: HttpClient,
+    private localStorage: LocalStorageService,
+    private azureAdAuthenticationService: AzureAdAuthenticationService
+  ) {
     super(http, "users");
   }
 
   public login(userCredentials: UserCredentialsModel): Observable<ApplicationUserModel> {
+    this.setAuthenticationType(AuthenticationType.Default);
     return this.post<ApplicationUserModel>(userCredentials, "/authenticate").pipe(
       map(user => {
-        this.localStorage.setUserItem("bearerToken", user.bearerToken);
+        this.localStorage.setUserItem(LocalStorageKeys.AccessToken, user.bearerToken);
         this.updateUser(user);
 
         return user;
@@ -30,7 +40,22 @@ export class SecurityService extends ApiService {
     );
   }
 
+  public externalLogin(authenticationType: AuthenticationType): Promise<any> {
+    this.setAuthenticationType(authenticationType);
+    const authenticationService = this.getExternalAuthentication();
+    if (authenticationService) {
+      return authenticationService.login().then(() => {
+        this.loadCurrentUser();
+      });
+    }
+  }
+
   public logout() {
+    const authenticationService = this.getExternalAuthentication();
+    if (authenticationService) {
+      authenticationService.logout();
+    }
+
     this.localStorage.clearUserItems();
     this.updateUser(new ApplicationUserModel());
   }
@@ -43,31 +68,76 @@ export class SecurityService extends ApiService {
     }
   }
 
-  public restoreSession(): Observable<ApplicationUserModel> {
-    const bearerToken = this.getBearerToken();
-    if (!bearerToken) {
-      return of(this.applicationUser);
+  public async restoreSession(): Promise<ApplicationUserModel> {
+    let accessToken = null;
+
+    const authenticationService = this.getExternalAuthentication();
+    if (authenticationService) {
+      await authenticationService.awaitInitialization();
+      accessToken = authenticationService.getAccessToken();
+    } else {
+      accessToken = this.getAccessToken();
     }
 
-    return this.get<ApplicationUserModel>("/restore").pipe(
-      map(applicationUser => {
-        if (applicationUser) {
-          this.updateUser(applicationUser);
-        } else {
-          this.logout();
-        }
+    if (!accessToken) {
+      return of(null).toPromise();
+    }
 
-        return this.applicationUser;
-      })
-    );
+    this.loadCurrentUser();
   }
 
-  public getBearerToken(): string {
-    return this.applicationUser.bearerToken ? this.applicationUser.bearerToken : this.localStorage.getItem("bearerToken");
+  public getAccessToken(): string {
+    const authenticationService = this.getExternalAuthentication();
+    if (authenticationService) {
+      return authenticationService.getAccessToken();
+    }
+
+    return this.applicationUser.bearerToken ? this.applicationUser.bearerToken : this.localStorage.getItem(LocalStorageKeys.AccessToken);
   }
 
   private updateUser(applicationUser: ApplicationUserModel) {
     Object.assign(this.applicationUser, applicationUser);
     this.applicationUserChanged.emit(this.applicationUser);
+  }
+
+  private loadCurrentUser(): Promise<ApplicationUserModel> {
+    return this.get<ApplicationUserModel>("/current")
+      .pipe(
+        map(applicationUser => {
+          if (applicationUser) {
+            this.updateUser(applicationUser);
+          } else {
+            this.logout();
+          }
+
+          return this.applicationUser;
+        })
+      )
+      .toPromise();
+  }
+
+  private getExternalAuthentication(): ExternalAuthentication {
+    const authenticationType = this.getAuthenticationType();
+    switch (authenticationType) {
+      case AuthenticationType.AzureAd: {
+        return environment.azureAdSettings.enabled ? this.azureAdAuthenticationService : null;
+      }
+      default: {
+        return null;
+      }
+    }
+  }
+
+  private getAuthenticationType(): AuthenticationType {
+    let authenticationType = this.localStorage.getItem<AuthenticationType>(LocalStorageKeys.AuthenticationType);
+    if (!authenticationType) {
+      authenticationType = AuthenticationType.Default;
+    }
+
+    return authenticationType;
+  }
+
+  private setAuthenticationType(authenticationType: AuthenticationType) {
+    this.localStorage.setUserItem(LocalStorageKeys.AuthenticationType, authenticationType);
   }
 }

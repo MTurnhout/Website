@@ -29,6 +29,7 @@ namespace Website.Business.Authentication
             {
                 new Claim(JwtRegisteredClaimNames.Sub, authenticationModel.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, _userGuid.ToString()),
+                new Claim(ClaimTypes.Email, authenticationModel.Email)
             };
 
             foreach (ApplicationClaimType claimType in authenticationModel.Claims)
@@ -54,10 +55,10 @@ namespace Website.Business.Authentication
             return authenticationModel;
         }
 
-        public ApplicationUserModel Restore(ClaimsPrincipal user)
+        public ApplicationUserModel GetCurrentUser(ClaimsPrincipal user)
         {
-            var userGuid = user?.FindFirstValue(JwtRegisteredClaimNames.Jti);
-            if (string.IsNullOrEmpty(userGuid))
+            var email = user?.FindFirstValue(ClaimTypes.Email);
+            if (string.IsNullOrEmpty(email))
                 return null;
 
             var authenticationModel = GetUserModel();

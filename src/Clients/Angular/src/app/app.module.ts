@@ -21,5 +21,5 @@ import { HasClaimDirective } from "./core/security/directives/has-claim.directiv
 export class AppModule {}
 
 export function loadCurrentUser(securityService: SecurityService) {
-  return () => securityService.restoreSession().toPromise();
+  return () => securityService.restoreSession();
 }

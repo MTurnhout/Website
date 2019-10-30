@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -44,17 +45,18 @@ namespace Mt.Website.Api
             services.Configure<JwtSettings>(jwtSettingsSection);
             var jwtSettings = jwtSettingsSection.Get<JwtSettings>();
 
-            // JWT authentication
-            services.AddAuthentication(x =>
+            var azureAdSettingsSection = _configuration.GetSection("AzureAdSettings");
+            services.Configure<AzureAdSettings>(azureAdSettingsSection);
+            var azureAdSettings = azureAdSettingsSection.Get<AzureAdSettings>();
+
+            var authenticationSchemes = new List<string> { JwtBearerDefaults.AuthenticationScheme };
+
+            var authentication = services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(
@@ -68,6 +70,29 @@ namespace Mt.Website.Api
                 };
             });
 
+            if (azureAdSettings.IsEnabled)
+            {
+                authenticationSchemes.Add("AzureAD");
+                authentication.AddJwtBearer("AzureAD", options =>
+                    {
+                        var authority = $"https://sts.windows.net/{azureAdSettings.TenantId}/";
+
+                        options.Authority = authority;
+                        options.Audience = azureAdSettings.ClientId;
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(
+                                Encoding.ASCII.GetBytes(azureAdSettings.ClientSecret)),
+                            ValidateIssuer = true,
+                            ValidIssuer = authority,
+                            ValidateAudience = false,
+                            ValidAudience = azureAdSettings.ClientId,
+                            ValidateLifetime = true
+                        };
+                    });
+            }
+
             // Configure database connection
             services.AddBusinessServices(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
@@ -76,7 +101,7 @@ namespace Mt.Website.Api
             // API
             services.AddControllers(o =>
             {
-                var policy = new AuthorizationPolicyBuilder()
+                var policy = new AuthorizationPolicyBuilder(authenticationSchemes.ToArray())
                     .RequireAuthenticatedUser()
                     .Build();
                 o.Filters.Add(new AuthorizeFilter(policy));

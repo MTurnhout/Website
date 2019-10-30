@@ -23,7 +23,11 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              { "glob": "oidc-client.min.js", "input": "./node_modules/oidc-client/lib/", "output": "./assets/js/" }
+            ],
             "styles": ["src/styles.scss"],
             "scripts": []
           },

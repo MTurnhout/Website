@@ -42,10 +42,10 @@ namespace Mt.Website.Api.Controllers
             return Ok(user);
         }
 
-        [HttpGet("restore")]
-        public ActionResult<ApplicationUserModel> RestoreSession()
+        [HttpGet("current")]
+        public ActionResult<ApplicationUserModel> GetCurrentUser()
         {
-            var user = _authenticationService.Restore(User);
+            var user = _authenticationService.GetCurrentUser(User);
 
             return Ok(user);
         }

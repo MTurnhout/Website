@@ -6,6 +6,6 @@ namespace Website.Business.Authentication
     public interface IAuthenticationService
     {
         ApplicationUserModel Authenticate(UserCredentials userCredentials);
-        ApplicationUserModel Restore(ClaimsPrincipal user);
+        ApplicationUserModel GetCurrentUser(ClaimsPrincipal user);
     }
 }

@@ -54,16 +54,18 @@ namespace Mt.Website.Api
             var authentication = services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
+#if DEBUG
                 options.RequireHttpsMetadata = false;
+#endif
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.ASCII.GetBytes(jwtSettings.Key)),
-                    ValidateIssuer = false,
+                    ValidateIssuer = true,
                     ValidIssuer = jwtSettings.Issuer,
-                    ValidateAudience = false,
+                    ValidateAudience = true,
                     ValidAudience = jwtSettings.Audience,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.FromMinutes(jwtSettings.MinutesToExpiration)
@@ -86,7 +88,7 @@ namespace Mt.Website.Api
                                 Encoding.ASCII.GetBytes(azureAdSettings.ClientSecret)),
                             ValidateIssuer = true,
                             ValidIssuer = authority,
-                            ValidateAudience = false,
+                            ValidateAudience = true,
                             ValidAudience = azureAdSettings.ClientId,
                             ValidateLifetime = true
                         };

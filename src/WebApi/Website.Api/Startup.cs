@@ -41,14 +41,23 @@ namespace Mt.Website.Api
             services.Configure<ApplicationSettings>(_configuration.GetSection("AppSettings"));
             services.Configure<ReCaptchaSettings>(_configuration.GetSection("Recaptcha"));
 
-            var jwtSettingsSection = _configuration.GetSection("JwtSettings");
+            var jwtSettingsSection = _configuration.GetSection("Jwt");
             services.Configure<JwtSettings>(jwtSettingsSection);
             var jwtSettings = jwtSettingsSection.Get<JwtSettings>();
 
-            var azureAdSettingsSection = _configuration.GetSection("AzureAdSettings");
+            var azureAdSettingsSection = _configuration.GetSection("AzureAd");
             services.Configure<AzureAdSettings>(azureAdSettingsSection);
             var azureAdSettings = azureAdSettingsSection.Get<AzureAdSettings>();
 
+            var applicationInsightsSettingsSection = _configuration.GetSection("ApplicationInsights");
+            services.Configure<ApplicationInsightsSettings>(applicationInsightsSettingsSection);
+            var applicationInsightsSettings = applicationInsightsSettingsSection.Get<ApplicationInsightsSettings>();
+
+            // Application Insights
+            if (!string.IsNullOrEmpty(applicationInsightsSettings.InstrumentationKey))
+                services.AddApplicationInsightsTelemetry(applicationInsightsSettings.InstrumentationKey);
+
+            // Authentication
             var authenticationSchemes = new List<string> { JwtBearerDefaults.AuthenticationScheme };
 
             var authentication = services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -72,7 +81,7 @@ namespace Mt.Website.Api
                 };
             });
 
-            if (azureAdSettings.IsEnabled)
+            if (azureAdSettings.IsEnabled && !string.IsNullOrEmpty(azureAdSettings.ClientSecret))
             {
                 authenticationSchemes.Add("AzureAD");
                 authentication.AddJwtBearer("AzureAD", options =>

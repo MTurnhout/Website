@@ -6,3 +6,8 @@
 .ng-touched.ng-invalid {
   @extend .is-invalid;
 }
+
+// Remove red invalid border of Firefox
+input:invalid {
+  box-shadow: none;
+}

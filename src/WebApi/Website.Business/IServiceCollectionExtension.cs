@@ -1,7 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Mt.Website.Data;
+using Website.Data;
 using Website.Business.Authentication;
 
 namespace Website.Business

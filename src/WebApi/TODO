@@ -7,5 +7,5 @@ Todo:
     ☐ Return blog posts list @created(2018-12-10 03:50)
     ☐ Return blog post @created(2018-12-10 03:50)
   Data:
-    ☐ Create blog data structure @created(2018-12-10 03:52)
-    ☐ Create migrations @created(2018-12-10 03:51)
+    ☐ Create core and blog entities @created(19-12-09 00:16) @started(19-12-09 00:19)
+    ☐ Create initial migration @created(19-12-09 00:17)

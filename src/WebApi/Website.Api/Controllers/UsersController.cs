@@ -6,7 +6,7 @@ using Website.Api.ReCaptcha;
 using Website.Business.Authentication;
 using Website.Business.Authentication.Models;
 
-namespace Mt.Website.Api.Controllers
+namespace Website.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

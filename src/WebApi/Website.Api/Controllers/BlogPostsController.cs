@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Website.Business.Blog;
 using Website.Business.Blog.Models;
 
-namespace Mt.Website.Api.Controllers
+namespace Website.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

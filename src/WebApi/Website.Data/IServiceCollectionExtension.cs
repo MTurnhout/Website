@@ -1,9 +1,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Mt.Website.Data.Entities;
+using Website.Data.Entity;
 
-namespace Mt.Website.Data
+namespace Website.Data
 {
     public static class IServiceCollectionExtension
     {

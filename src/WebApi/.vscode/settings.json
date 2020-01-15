@@ -5,10 +5,10 @@
     "**/wwwroot": true
   },
   "git.autofetch": true,
-  "editor.defaultFormatter": "ms-vscode.csharp",
   "editor.formatOnSave": true,
   "omnisharp.enableRoslynAnalyzers": true,
   "[csharp]": {
+    "editor.defaultFormatter": "ms-vscode.csharp",
     "files.encoding": "utf8bom"
   }
 }

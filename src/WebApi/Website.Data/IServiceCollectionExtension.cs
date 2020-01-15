@@ -1,10 +1,10 @@
-using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Website.Data.Entity;
-
 namespace Website.Data
 {
+    using System;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using Website.Data.Entity;
+
     public static class IServiceCollectionExtension
     {
         public static IServiceCollection AddDataServices(

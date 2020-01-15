@@ -1,9 +1,15 @@
-using System;
-using System.Globalization;
-using System.Text.Json.Serialization;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ReCaptchaResponseModel.cs" company="Martijn Turnhout">
+//     Copyright (c) Martijn Turnhout. All Rights Reserved.
+// </copyright>
+// <author>Martijn Turnhout</author>
+//-----------------------------------------------------------------------
 namespace Website.Api.ReCaptcha
 {
+    using System;
+    using System.Globalization;
+    using System.Text.Json.Serialization;
+
     public class ReCaptchaResponseModel
     {
         [JsonPropertyName("success")]
@@ -14,7 +20,7 @@ namespace Website.Api.ReCaptcha
         [JsonPropertyName("challenge_ts")]
         public string ChallengeTimestamp
         {
-            set => ChallengeAt = DateTime.Parse(value, CultureInfo.CreateSpecificCulture("en-US"));
+            set => this.ChallengeAt = DateTime.Parse(value, CultureInfo.CreateSpecificCulture("en-US"));
         }
 
         [JsonPropertyName("hostname")]

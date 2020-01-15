@@ -6,5 +6,9 @@
   },
   "git.autofetch": true,
   "editor.defaultFormatter": "ms-vscode.csharp",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "omnisharp.enableRoslynAnalyzers": true,
+  "[csharp]": {
+    "files.encoding": "utf8bom"
+  }
 }

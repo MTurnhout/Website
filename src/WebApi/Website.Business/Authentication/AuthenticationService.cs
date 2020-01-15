@@ -1,35 +1,41 @@
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Website.Business.Authentication.Enums;
-using Website.Business.Authentication.Models;
-using Website.Business.Settings;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="AuthenticationService.cs" company="Martijn Turnhout">
+//     Copyright (c) Martijn Turnhout. All Rights Reserved.
+// </copyright>
+// <author>Martijn Turnhout</author>
+//-----------------------------------------------------------------------
 namespace Website.Business.Authentication
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
+    using System.Text;
+    using Microsoft.Extensions.Options;
+    using Microsoft.IdentityModel.Tokens;
+    using Website.Business.Authentication.Enums;
+    using Website.Business.Authentication.Models;
+    using Website.Business.Settings;
+
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly JwtSettings _jwtSettings;
-        private Guid _userGuid = new Guid("2ef201ca-14e3-4f45-a435-587cb355e82d");
+        private readonly JwtSettings jwtSettings;
+        private Guid userGuid = new Guid("2ef201ca-14e3-4f45-a435-587cb355e82d");
 
         public AuthenticationService(IOptions<JwtSettings> jwtSettings)
         {
-            _jwtSettings = jwtSettings.Value;
+            this.jwtSettings = jwtSettings.Value;
         }
 
         public ApplicationUserModel Authenticate(UserCredentials userCredentials)
         {
-            var authenticationModel = GetUserModel();
+            var authenticationModel = this.GetUserModel();
 
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, authenticationModel.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, _userGuid.ToString()),
-                new Claim(ClaimTypes.Email, authenticationModel.Email)
+                new Claim(JwtRegisteredClaimNames.Jti, this.userGuid.ToString()),
+                new Claim(ClaimTypes.Email, authenticationModel.Email),
             };
 
             foreach (ApplicationClaimType claimType in authenticationModel.Claims)
@@ -38,18 +44,18 @@ namespace Website.Business.Authentication
             }
 
             // JWT token
-            var key = Encoding.ASCII.GetBytes(_jwtSettings.Key);
+            var key = Encoding.ASCII.GetBytes(this.jwtSettings.Key);
             var tokenHandler = new JwtSecurityTokenHandler();
             authenticationModel.BearerToken = tokenHandler.WriteToken(
                 tokenHandler.CreateToken(new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(claims),
-                    Issuer = _jwtSettings.Issuer,
-                    Audience = _jwtSettings.Audience,
-                    Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.MinutesToExpiration),
+                    Issuer = this.jwtSettings.Issuer,
+                    Audience = this.jwtSettings.Audience,
+                    Expires = DateTime.UtcNow.AddMinutes(this.jwtSettings.MinutesToExpiration),
                     SigningCredentials = new SigningCredentials(
                         new SymmetricSecurityKey(key),
-                        SecurityAlgorithms.HmacSha256Signature)
+                        SecurityAlgorithms.HmacSha256Signature),
                 }));
 
             return authenticationModel;
@@ -59,11 +65,11 @@ namespace Website.Business.Authentication
         {
             var email = user?.FindFirstValue(ClaimTypes.Email);
             if (string.IsNullOrEmpty(email))
+            {
                 return null;
+            }
 
-            var authenticationModel = GetUserModel();
-
-
+            var authenticationModel = this.GetUserModel();
 
             return authenticationModel;
         }
@@ -77,7 +83,7 @@ namespace Website.Business.Authentication
                 LastName = "Turnhout",
                 Email = "martijnturnhout@example.com",
                 IsAuthenticated = true,
-                Claims = new List<ApplicationClaimType>()
+                Claims = new List<ApplicationClaimType>(),
             };
 
             foreach (ApplicationClaimType claimType in Enum.GetValues(typeof(ApplicationClaimType)))

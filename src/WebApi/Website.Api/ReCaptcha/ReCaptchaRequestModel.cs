@@ -1,7 +1,13 @@
-using System.Text.Json.Serialization;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ReCaptchaRequestModel.cs" company="Martijn Turnhout">
+//     Copyright (c) Martijn Turnhout. All Rights Reserved.
+// </copyright>
+// <author>Martijn Turnhout</author>
+//-----------------------------------------------------------------------
 namespace Website.Api.ReCaptcha
 {
+    using System.Text.Json.Serialization;
+
     public class ReCaptchaRequestModel
     {
         [JsonPropertyName("secret")]

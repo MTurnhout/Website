@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------
 // <copyright file="UserRole.cs" company="Martijn Turnhout">
 //     Copyright (c) Martijn Turnhout. All Rights Reserved.
 // </copyright>

@@ -1,59 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Website.Api.ReCaptcha;
-using Website.Business;
-using Website.Business.Settings;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="Startup.cs" company="Martijn Turnhout">
+//     Copyright (c) Martijn Turnhout. All Rights Reserved.
+// </copyright>
+// <author>Martijn Turnhout</author>
+//-----------------------------------------------------------------------
 namespace Website.Api
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc.Authorization;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.IdentityModel.Tokens;
+    using Website.Api.ReCaptcha;
+    using Website.Business;
+    using Website.Business.Settings;
+
     public class Startup
     {
-        private IConfiguration _configuration { get; }
-        private IWebHostEnvironment _environment { get; }
-
+        private readonly IConfiguration configuration;
+        private readonly IWebHostEnvironment environment;
 
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
-            _configuration = configuration;
-            _environment = environment;
+            this.configuration = configuration;
+            this.environment = environment;
         }
-
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Settings
-            services.Configure<ApplicationSettings>(_configuration.GetSection("AppSettings"));
-            services.Configure<ReCaptchaSettings>(_configuration.GetSection("Recaptcha"));
+            services.Configure<ApplicationSettings>(this.configuration.GetSection("AppSettings"));
+            services.Configure<ReCaptchaSettings>(this.configuration.GetSection("Recaptcha"));
 
-            var jwtSettingsSection = _configuration.GetSection("Jwt");
+            var jwtSettingsSection = this.configuration.GetSection("Jwt");
             services.Configure<JwtSettings>(jwtSettingsSection);
             var jwtSettings = jwtSettingsSection.Get<JwtSettings>();
 
-            var azureAdSettingsSection = _configuration.GetSection("AzureAd");
+            var azureAdSettingsSection = this.configuration.GetSection("AzureAd");
             services.Configure<AzureAdSettings>(azureAdSettingsSection);
             var azureAdSettings = azureAdSettingsSection.Get<AzureAdSettings>();
 
-            var applicationInsightsSettingsSection = _configuration.GetSection("ApplicationInsights");
+            var applicationInsightsSettingsSection = this.configuration.GetSection("ApplicationInsights");
             services.Configure<ApplicationInsightsSettings>(applicationInsightsSettingsSection);
             var applicationInsightsSettings = applicationInsightsSettingsSection.Get<ApplicationInsightsSettings>();
 
             // Application Insights
             if (!string.IsNullOrEmpty(applicationInsightsSettings.InstrumentationKey))
+            {
                 services.AddApplicationInsightsTelemetry(applicationInsightsSettings.InstrumentationKey);
+            }
 
             // Authentication
             var authenticationSchemes = new List<string> { JwtBearerDefaults.AuthenticationScheme };
@@ -75,7 +81,7 @@ namespace Website.Api
                     ValidateAudience = true,
                     ValidAudience = jwtSettings.Audience,
                     ValidateLifetime = true,
-                    ClockSkew = TimeSpan.FromMinutes(jwtSettings.MinutesToExpiration)
+                    ClockSkew = TimeSpan.FromMinutes(jwtSettings.MinutesToExpiration),
                 };
             });
 
@@ -97,15 +103,14 @@ namespace Website.Api
                             ValidIssuer = authority,
                             ValidateAudience = true,
                             ValidAudience = azureAdSettings.ClientId,
-                            ValidateLifetime = true
+                            ValidateLifetime = true,
                         };
                     });
             }
 
             // Configure database connection
             services.AddBusinessServices(options =>
-                options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
-            );
+                options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
             // API
             services.AddControllers(o =>
@@ -123,7 +128,7 @@ namespace Website.Api
         public void Configure(IApplicationBuilder app)
         {
             int cachePeriod;
-            if (_environment.IsDevelopment())
+            if (this.environment.IsDevelopment())
             {
                 cachePeriod = 600;
                 app.UseDeveloperExceptionPage();
@@ -141,14 +146,14 @@ namespace Website.Api
                 OnPrepareResponse = ctx =>
                 {
                     ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
-                }
+                },
             });
+
             // In development (debug) client will use another port
 #if !DEBUG
             app.MapWhen(
                 context => !context.Request.Path.StartsWithSegments("/api"),
-                HandleSpa
-            );
+                this.HandleSpa);
 #endif
             app.UseRouting();
 
@@ -162,14 +167,15 @@ namespace Website.Api
             });
         }
 
-
+#if !DEBUG
         private void HandleSpa(IApplicationBuilder app)
         {
             app.Run(async (context) =>
             {
                 context.Response.ContentType = "text/html";
-                await context.Response.SendFileAsync(Path.Combine(_environment.WebRootPath, "index.html"));
+                await context.Response.SendFileAsync(Path.Combine(this.environment.WebRootPath, "index.html"));
             });
         }
+#endif
     }
 }

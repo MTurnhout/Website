@@ -1,11 +1,17 @@
-using System;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Website.Data.Entity.Converters;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ModelBuilderExtension.cs" company="Martijn Turnhout">
+//     Copyright (c) Martijn Turnhout. All Rights Reserved.
+// </copyright>
+// <author>Martijn Turnhout</author>
+//-----------------------------------------------------------------------
 namespace Website.Data.Entity.Extensions
 {
+    using System;
+    using System.Linq;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+    using Website.Data.Entity.Converters;
+
     public static class ModelBuilderExtension
     {
         public static void SetDefaultDateTimeKind(this ModelBuilder modelBuilder, DateTimeKind kind)

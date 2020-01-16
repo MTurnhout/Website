@@ -13,6 +13,10 @@ namespace Website.Api.Controllers
     using Website.Business.Authentication;
     using Website.Business.Authentication.Models;
 
+    /// <summary>
+    /// A Web API controller class that provides access to users data.
+    /// </summary>
+    [Route("api/[controller]")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -21,6 +25,12 @@ namespace Website.Api.Controllers
         private readonly IHttpContextAccessor accessor;
         private readonly IReCaptchaService recaptchaService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsersController"/> class.
+        /// </summary>
+        /// <param name="authenticationService">A instance of <see cref="IAuthenticationService"/>.</param>
+        /// <param name="accessor">A instance of <see cref="IHttpContextAccessor"/>.</param>
+        /// <param name="recaptchaService">A instance of <see cref="IReCaptchaService"/>.</param>
         public UsersController(
             IAuthenticationService authenticationService,
             IHttpContextAccessor accessor,
@@ -31,6 +41,11 @@ namespace Website.Api.Controllers
             this.recaptchaService = recaptchaService;
         }
 
+        /// <summary>
+        /// Authenticate user.
+        /// </summary>
+        /// <param name="userCredentials">A instance of <see cref="UserCredentials"/> containing credentials of user.</param>
+        /// <returns>A action result containing user information, see <see cref="ApplicationUserModel"/>.</returns>
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public ActionResult<ApplicationUserModel> Post([FromBody] UserCredentials userCredentials)
@@ -51,6 +66,10 @@ namespace Website.Api.Controllers
             return this.Ok(user);
         }
 
+        /// <summary>
+        /// Gets token, claims and user information of current authenticated user.
+        /// </summary>
+        /// <returns>A action result containing user information, see <see cref="ApplicationUserModel"/>.</returns>
         [HttpGet("current")]
         public ActionResult<ApplicationUserModel> GetCurrentUser()
         {

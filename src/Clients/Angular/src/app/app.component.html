@@ -14,9 +14,19 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup" [ngbCollapse]="isCollapsed">
+      <div
+        class="collapse navbar-collapse justify-content-center"
+        id="navbarNavAltMarkup"
+        [ngbCollapse]="isCollapsed"
+      >
         <div class="navbar-nav">
-          <a class="nav-item nav-link" routerLinkActive="active" routerLink="/blog" (click)="collapseNavigationBar()">Blog</a>
+          <a
+            class="nav-item nav-link"
+            routerLinkActive="active"
+            routerLink="/blog"
+            (click)="collapseNavigationBar()"
+            >Blog</a
+          >
         </div>
         <div class="navbar-nav ml-auto">
           <a

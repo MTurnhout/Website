@@ -6,7 +6,9 @@ describe("AzureAdAuthenticationService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it("should be created", () => {
-    const service: AzureAdAuthenticationService = TestBed.get(AzureAdAuthenticationService);
+    const service: AzureAdAuthenticationService = TestBed.get(
+      AzureAdAuthenticationService
+    );
     expect(service).toBeTruthy();
   });
 });

@@ -28,11 +28,19 @@ export class SecurityService extends ApiService {
     super(http, "users");
   }
 
-  public login(userCredentials: UserCredentialsModel): Observable<ApplicationUserModel> {
+  public login(
+    userCredentials: UserCredentialsModel
+  ): Observable<ApplicationUserModel> {
     this.setAuthenticationType(AuthenticationType.Default);
-    return this.post<ApplicationUserModel>(userCredentials, "/authenticate").pipe(
+    return this.post<ApplicationUserModel>(
+      userCredentials,
+      "/authenticate"
+    ).pipe(
       map(user => {
-        this.localStorage.setUserItem(LocalStorageKeys.AccessToken, user.bearerToken);
+        this.localStorage.setUserItem(
+          LocalStorageKeys.AccessToken,
+          user.bearerToken
+        );
         this.updateUser(user);
 
         return user;
@@ -92,7 +100,9 @@ export class SecurityService extends ApiService {
       return authenticationService.getAccessToken();
     }
 
-    return this.applicationUser.bearerToken ? this.applicationUser.bearerToken : this.localStorage.getItem(LocalStorageKeys.AccessToken);
+    return this.applicationUser.bearerToken
+      ? this.applicationUser.bearerToken
+      : this.localStorage.getItem(LocalStorageKeys.AccessToken);
   }
 
   private updateUser(applicationUser: ApplicationUserModel) {
@@ -120,7 +130,9 @@ export class SecurityService extends ApiService {
     const authenticationType = this.getAuthenticationType();
     switch (authenticationType) {
       case AuthenticationType.AzureAd: {
-        return environment.azureAdSettings.enabled ? this.azureAdAuthenticationService : null;
+        return environment.azureAdSettings.enabled
+          ? this.azureAdAuthenticationService
+          : null;
       }
       default: {
         return null;
@@ -129,7 +141,9 @@ export class SecurityService extends ApiService {
   }
 
   private getAuthenticationType(): AuthenticationType {
-    let authenticationType = this.localStorage.getItem<AuthenticationType>(LocalStorageKeys.AuthenticationType);
+    let authenticationType = this.localStorage.getItem<AuthenticationType>(
+      LocalStorageKeys.AuthenticationType
+    );
     if (!authenticationType) {
       authenticationType = AuthenticationType.Default;
     }
@@ -138,6 +152,9 @@ export class SecurityService extends ApiService {
   }
 
   private setAuthenticationType(authenticationType: AuthenticationType) {
-    this.localStorage.setUserItem(LocalStorageKeys.AuthenticationType, authenticationType);
+    this.localStorage.setUserItem(
+      LocalStorageKeys.AuthenticationType,
+      authenticationType
+    );
   }
 }

@@ -1,6 +1,11 @@
 import { Injectable } from "@angular/core";
 import { environment } from "@environments/environment";
-import { UserManager, UserManagerSettings, User, WebStorageStateStore } from "oidc-client";
+import {
+  UserManager,
+  UserManagerSettings,
+  User,
+  WebStorageStateStore
+} from "oidc-client";
 import { ExternalAuthentication } from "../interfaces/external-authentication";
 
 @Injectable({

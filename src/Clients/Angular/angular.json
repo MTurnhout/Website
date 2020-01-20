@@ -26,7 +26,11 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              { "glob": "oidc-client.min.js", "input": "./node_modules/oidc-client/lib/", "output": "./assets/js/" }
+              {
+                "glob": "oidc-client.min.js",
+                "input": "./node_modules/oidc-client/lib/",
+                "output": "./assets/js/"
+              }
             ],
             "styles": ["src/styles.scss"],
             "scripts": []
@@ -95,7 +99,11 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json", "e2e/tsconfig.json"],
+            "tsConfig": [
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
+            ],
             "exclude": ["**/node_modules/**"]
           }
         },

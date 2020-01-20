@@ -1,6 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { SecurityService, ApplicationUserModel, ApplicationClaimType } from "@core/security";
+import {
+  SecurityService,
+  ApplicationUserModel,
+  ApplicationClaimType
+} from "@core/security";
 
 @Component({
   selector: "app-root",
@@ -14,7 +18,10 @@ export class AppComponent implements OnInit {
 
   public ApplicationClaimType = ApplicationClaimType;
 
-  constructor(private router: Router, private securityService: SecurityService) {
+  constructor(
+    private router: Router,
+    private securityService: SecurityService
+  ) {
     this.applicationUser = securityService.applicationUser;
   }
 

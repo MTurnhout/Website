@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Website.Business\Mt.Website.Business.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Website.Common\Website.Common.csproj" />
+  </ItemGroup>
+
 </Project>

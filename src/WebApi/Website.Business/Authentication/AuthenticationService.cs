@@ -64,8 +64,8 @@ namespace Website.Business.Authentication
 
         public ApplicationUserModel GetCurrentUser(ClaimsPrincipal user)
         {
-            var email = user?.FindFirstValue(ClaimTypes.Email);
-            if (string.IsNullOrEmpty(email))
+            var emailClaim = user?.FindFirst(ClaimTypes.Email);
+            if (string.IsNullOrEmpty(emailClaim.Value))
             {
                 return null;
             }

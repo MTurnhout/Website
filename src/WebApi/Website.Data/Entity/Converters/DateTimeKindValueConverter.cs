@@ -4,6 +4,7 @@
 // </copyright>
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
+
 namespace Website.Data.Entity.Converters
 {
     using System;

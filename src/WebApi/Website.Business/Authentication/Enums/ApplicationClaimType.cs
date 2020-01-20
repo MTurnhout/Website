@@ -4,6 +4,7 @@
 // </copyright>
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
+
 namespace Website.Business.Authentication.Enums
 {
     public enum ApplicationClaimType

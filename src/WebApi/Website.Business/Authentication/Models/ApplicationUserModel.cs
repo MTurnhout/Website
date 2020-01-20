@@ -4,6 +4,7 @@
 // </copyright>
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
+
 namespace Website.Business.Authentication.Models
 {
     using System.Collections.Generic;

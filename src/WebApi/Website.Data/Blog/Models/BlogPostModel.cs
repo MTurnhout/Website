@@ -4,6 +4,7 @@
 // </copyright>
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
+
 namespace Website.Data.Blog.Models
 {
     public class BlogPostModel

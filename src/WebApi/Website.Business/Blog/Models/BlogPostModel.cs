@@ -4,6 +4,7 @@
 // </copyright>
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
+
 namespace Website.Business.Blog.Models
 {
     using System;

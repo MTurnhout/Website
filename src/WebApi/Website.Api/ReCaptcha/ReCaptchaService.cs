@@ -14,15 +14,30 @@ namespace Website.Api.ReCaptcha
     using System.Text.Json;
     using Microsoft.Extensions.Options;
 
+    /// <summary>
+    /// reCAPTCHA service that helps validating captcha response.
+    /// </summary>
     public class ReCaptchaService : IReCaptchaService
     {
         private readonly ReCaptchaSettings recaptchaSettings;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReCaptchaService"/> class.
+        /// </summary>
+        /// <param name="recaptchaSettings">
+        /// A instance of <see cref="IOptions{ReCaptchaSettings}"/> containing the settings.
+        /// </param>
         public ReCaptchaService(IOptions<ReCaptchaSettings> recaptchaSettings)
         {
             this.recaptchaSettings = recaptchaSettings.Value;
         }
 
+        /// <summary>
+        /// Validate captcha response.
+        /// </summary>
+        /// <param name="responseToken">The user response token provided by the reCAPTCHA.</param>
+        /// <param name="remoteIp">The user's IP address (optional).</param>
+        /// <returns>Boolean indicating if the response token in valid.</returns>
         public bool Validate(string responseToken, string remoteIp = null)
         {
             if (!this.recaptchaSettings.IsEnabled)
@@ -49,7 +64,7 @@ namespace Website.Api.ReCaptcha
 
                 return result.Success;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("Failed to validate reCAPTCHA", ex);
             }

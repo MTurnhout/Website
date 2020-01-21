@@ -9,7 +9,7 @@ namespace Website.Business.Blog
 {
     using System;
     using System.Collections.Generic;
-    using Website.Business.Blog.Models;
+    using Website.Common.Models.Blog;
 
     public class BlogPostsService
     {

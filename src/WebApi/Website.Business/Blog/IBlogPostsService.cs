@@ -8,7 +8,7 @@
 namespace Website.Business.Blog
 {
     using System.Collections.Generic;
-    using Website.Business.Blog.Models;
+    using Website.Common.Models.Blog;
 
     public interface IBlogPostsService
     {

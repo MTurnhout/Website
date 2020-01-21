@@ -11,7 +11,7 @@ namespace Website.Api.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Website.Business.Blog;
-    using Website.Business.Blog.Models;
+    using Website.Common.Models.Blog;
 
     /// <summary>
     /// A Web API controller class that provides access to blog post data.

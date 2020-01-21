@@ -11,10 +11,10 @@ namespace Website.Api.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Website.Business.Blog;
-    using Website.Common.Models.Blog;
+    using Website.Common.Blog.Models;
 
     /// <summary>
-    /// A Web API controller class that provides access to blog post data.
+    /// A Web API controller that provides access to blog post data.
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]

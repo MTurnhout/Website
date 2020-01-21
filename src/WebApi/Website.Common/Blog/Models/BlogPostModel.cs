@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Common.Models.Blog
+namespace Website.Common.Blog.Models
 {
     using System;
 

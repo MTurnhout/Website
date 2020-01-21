@@ -13,8 +13,17 @@ namespace Website.Data
     using Website.Common.Database;
     using Website.Data.Entity;
 
+    /// <summary>
+    /// Contains extension methods for <see cref="IServiceCollection"/>.
+    /// </summary>
     public static class IServiceCollectionExtension
     {
+        /// <summary>
+        /// Adds services to dependency injection that are in data project.
+        /// </summary>
+        /// <param name="services"><see cref="IServiceCollection"/> being extended.</param>
+        /// <param name="databaseSettings">Database settings.</param>
+        /// <returns>Extended <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddDataServices(
             this IServiceCollection services,
             DatabaseSettings databaseSettings)

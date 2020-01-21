@@ -18,16 +18,30 @@ namespace Website.Business.Authentication
     using Website.Business.Authentication.Models;
     using Website.Business.Settings;
 
+    /// <summary>
+    /// Authentication services that helps authenticate a user.
+    /// </summary>
     public class AuthenticationService : IAuthenticationService
     {
         private readonly JwtSettings jwtSettings;
         private Guid userGuid = new Guid("2ef201ca-14e3-4f45-a435-587cb355e82d");
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AuthenticationService"/> class.
+        /// </summary>
+        /// <param name="jwtSettings">
+        /// A instance of <see cref="IOptions{JwtSettings}"/> containing the settings.
+        /// </param>
         public AuthenticationService(IOptions<JwtSettings> jwtSettings)
         {
             this.jwtSettings = jwtSettings.Value;
         }
 
+        /// <summary>
+        /// Authenticate a user with the specified credentials.
+        /// </summary>
+        /// <param name="userCredentials">The credentials of the user.</param>
+        /// <returns>User details if user can be authenticated. Otherwise null.</returns>
         public ApplicationUserModel Authenticate(UserCredentials userCredentials)
         {
             var authenticationModel = this.GetUserModel();
@@ -62,6 +76,11 @@ namespace Website.Business.Authentication
             return authenticationModel;
         }
 
+        /// <summary>
+        /// Get the current authenticated user details.
+        /// </summary>
+        /// <param name="user">The authenticated user.</param>
+        /// <returns>The current authentication user details.</returns>
         public ApplicationUserModel GetCurrentUser(ClaimsPrincipal user)
         {
             var emailClaim = user?.FindFirst(ClaimTypes.Email);

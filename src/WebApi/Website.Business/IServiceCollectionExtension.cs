@@ -12,8 +12,17 @@ namespace Website.Business
     using Website.Common.Database;
     using Website.Data;
 
+    /// <summary>
+    /// Contains extension methods for <see cref="IServiceCollection"/>.
+    /// </summary>
     public static class IServiceCollectionExtension
     {
+        /// <summary>
+        /// Adds services to dependency injection that are in business project.
+        /// </summary>
+        /// <param name="services"><see cref="IServiceCollection"/> being extended.</param>
+        /// <param name="databaseSettings">Database settings.</param>
+        /// <returns>Extended <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddBusinessServices(
             this IServiceCollection services,
             DatabaseSettings databaseSettings)

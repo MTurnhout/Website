@@ -13,14 +13,29 @@ namespace Website.Data.Entity.Extensions
     using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
     using Website.Data.Entity.Converters;
 
+    /// <summary>
+    /// Contains extension methods for <see cref="ModelBuilder"/>.
+    /// </summary>
     public static class ModelBuilderExtension
     {
+        /// <summary>
+        /// Set the default DateTime properties kind of the entity framework entities to the specified kind.
+        /// </summary>
+        /// <param name="modelBuilder"><see cref="ModelBuilder"/> being extended.</param>
+        /// <param name="kind">DateTime kind to set the DateTime property values in entities to.</param>
         public static void SetDefaultDateTimeKind(this ModelBuilder modelBuilder, DateTimeKind kind)
         {
             modelBuilder.UseValueConverterForType<DateTime>(new DateTimeKindValueConverter(kind));
             modelBuilder.UseValueConverterForType<DateTime?>(new DateTimeKindValueConverter(kind));
         }
 
+        /// <summary>
+        /// Sets converter for all properties of all entities in the entity model with a specific type.
+        /// </summary>
+        /// <param name="modelBuilder"><see cref="ModelBuilder"/> being extended.</param>
+        /// <param name="converter">Value converter.</param>
+        /// <typeparam name="T">Type that needs to be converted.</typeparam>
+        /// <returns>Extended <see cref="ModelBuilder"/>.</returns>
         public static ModelBuilder UseValueConverterForType<T>(this ModelBuilder modelBuilder, ValueConverter converter)
         {
             var type = typeof(T);

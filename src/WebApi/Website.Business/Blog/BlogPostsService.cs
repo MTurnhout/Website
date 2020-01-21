@@ -9,10 +9,17 @@ namespace Website.Business.Blog
 {
     using System;
     using System.Collections.Generic;
-    using Website.Common.Models.Blog;
+    using Website.Common.Blog.Models;
 
+    /// <summary>
+    /// Blog post service that provides access to blog post data.
+    /// </summary>
     public class BlogPostsService
     {
+        /// <summary>
+        /// Get all the blog posts.
+        /// </summary>
+        /// <returns>All blog posts.</returns>
         public List<BlogPostModel> GetBlogPosts()
         {
             return new List<BlogPostModel>

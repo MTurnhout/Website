@@ -15,7 +15,7 @@ namespace Website.Api.Controllers
     using Website.Business.Authentication.Models;
 
     /// <summary>
-    /// A Web API controller class that provides access to users data.
+    /// A Web API controller that provides access to users data.
     /// </summary>
     [Route("api/[controller]")]
     [Route("api/[controller]")]

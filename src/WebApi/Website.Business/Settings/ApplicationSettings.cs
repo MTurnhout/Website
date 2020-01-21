@@ -7,6 +7,9 @@
 
 namespace Website.Business.Settings
 {
+    /// <summary>
+    /// Application settings.
+    /// </summary>
     public class ApplicationSettings
     {
     }

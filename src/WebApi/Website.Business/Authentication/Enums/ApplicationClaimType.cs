@@ -7,6 +7,9 @@
 
 namespace Website.Business.Authentication.Enums
 {
+    /// <summary>
+    /// The application claim types.
+    /// </summary>
     public enum ApplicationClaimType
     {
         /// <summary>

@@ -25,6 +25,7 @@ namespace Website.Api
     using Website.Api.ReCaptcha;
     using Website.Business;
     using Website.Business.Settings;
+    using Website.Common.Database;
 
     public class Startup
     {
@@ -110,8 +111,11 @@ namespace Website.Api
             }
 
             // Configure database connection
-            services.AddBusinessServices(options =>
-                options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
+            services.AddBusinessServices(new DatabaseSettings
+            {
+                DatabaseType = DatabaseType.MsSql,
+                ConnectionString = this.configuration.GetConnectionString("DefaultConnection"),
+            });
 
             // API
             services.AddControllers(o =>

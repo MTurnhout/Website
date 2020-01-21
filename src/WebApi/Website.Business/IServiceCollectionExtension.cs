@@ -7,19 +7,18 @@
 
 namespace Website.Business
 {
-    using System;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Website.Business.Authentication;
+    using Website.Common.Database;
     using Website.Data;
 
     public static class IServiceCollectionExtension
     {
         public static IServiceCollection AddBusinessServices(
             this IServiceCollection services,
-            Action<DbContextOptionsBuilder> setDbContextOptions)
+            DatabaseSettings databaseSettings)
         {
-            services.AddDataServices(setDbContextOptions);
+            services.AddDataServices(databaseSettings);
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 

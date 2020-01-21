@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Website.Common
+﻿namespace Website.Common.Database
 {
     public enum DatabaseType
     {

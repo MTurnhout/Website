@@ -1,6 +1,6 @@
-import { Directive, ViewContainerRef, TemplateRef, Input } from "@angular/core";
-import { SecurityService } from "../services/security.service";
+import { Directive, Input, TemplateRef, ViewContainerRef } from "@angular/core";
 import { ApplicationClaimType } from "../enums/application-claim-type.enum";
+import { SecurityService } from "../services/security.service";
 
 @Directive({
   selector: "[appHasClaim]"

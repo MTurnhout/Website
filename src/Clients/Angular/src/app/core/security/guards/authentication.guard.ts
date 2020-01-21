@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
   RouterStateSnapshot,
-  UrlTree,
-  Router
+  UrlTree
 } from "@angular/router";
+import { ToastService } from "@core/toast";
 import { Observable } from "rxjs";
 import { SecurityService } from "../services/security.service";
-import { ToastService } from "@core/toast";
 
 @Injectable({
   providedIn: "root"

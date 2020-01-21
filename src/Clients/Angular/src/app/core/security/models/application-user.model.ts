@@ -1,13 +1,13 @@
 import { ApplicationClaimType } from "../enums/application-claim-type.enum";
 
 export class ApplicationUserModel {
-  isAuthenticated = false;
-  bearerToken: string = null;
+  public isAuthenticated = false;
+  public bearerToken: string = null;
 
-  userName: string = null;
-  firstName: string = null;
-  lastName: string = null;
-  email: string = null;
+  public userName: string = null;
+  public firstName: string = null;
+  public lastName: string = null;
+  public email: string = null;
 
-  claims: ApplicationClaimType[] = [];
+  public claims: ApplicationClaimType[] = [];
 }

@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import {
-  SecurityService,
+  ApplicationClaimType,
   ApplicationUserModel,
-  ApplicationClaimType
+  SecurityService
 } from "@core/security";
 
 @Component({
@@ -11,7 +11,7 @@ import {
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"]
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   public title = "MT";
   public isCollapsed = true;
   public applicationUser: ApplicationUserModel;
@@ -24,8 +24,6 @@ export class AppComponent implements OnInit {
   ) {
     this.applicationUser = securityService.applicationUser;
   }
-
-  public ngOnInit(): void {}
 
   public logout(event: MouseEvent) {
     this.securityService.logout();

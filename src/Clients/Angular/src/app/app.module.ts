@@ -1,17 +1,17 @@
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule, APP_INITIALIZER } from "@angular/core";
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { JsonDateHttpInterceptor } from "@core/interceptors/json-date-http-interceptor";
+import {
+  JwtInterceptor,
+  SecurityService,
+  UnauthorizedErrorInterceptor
+} from "@core/security";
+import { ToastsContainerComponent } from "@core/toast";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import {
-  JwtInterceptor,
-  UnauthorizedErrorInterceptor,
-  SecurityService
-} from "@core/security";
-import { ToastsContainerComponent } from "@core/toast";
 import { HasClaimDirective } from "./core/security/directives/has-claim.directive";
-import { JsonDateHttpInterceptor } from "@core/interceptors/json-date-http-interceptor";
 
 @NgModule({
   declarations: [AppComponent, ToastsContainerComponent, HasClaimDirective],

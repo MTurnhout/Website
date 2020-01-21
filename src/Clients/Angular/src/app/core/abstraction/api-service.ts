@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
+import { environment } from "@environments/environment";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { environment } from "@environments/environment";
 
 export abstract class ApiService {
   protected actionUrl: string;
@@ -76,6 +76,7 @@ export abstract class ApiService {
       ? `${error.status} - ${error.statusText}`
       : "Server error";
 
+    // tslint:disable-next-line: no-console
     console.error(errorMessage);
     return throwError(error);
   }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { SecurityService } from "@core/security";
-import { environment } from "@environments/environment";
-import { ToastService } from "@core/toast";
 import { AuthenticationType } from "@core/security/enums/authentication-type.enum";
+import { ToastService } from "@core/toast";
+import { environment } from "@environments/environment";
 
 @Component({
   selector: "app-login",

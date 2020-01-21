@@ -1,5 +1,5 @@
 export class UserCredentialsModel {
-  email: string;
-  password: string;
-  recaptcha: string;
+  public email: string;
+  public password: string;
+  public recaptcha: string;
 }

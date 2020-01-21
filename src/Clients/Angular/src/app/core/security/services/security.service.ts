@@ -1,17 +1,17 @@
-import { Injectable, EventEmitter } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
-import { Observable, of } from "rxjs";
+import { EventEmitter, Injectable } from "@angular/core";
 import { ApiService } from "@core/abstraction";
 import { LocalStorageService } from "@core/local-storage";
+import { LocalStorageKeys } from "@core/local-storage-keys";
+import { environment } from "@environments/environment.prod";
+import { Observable, of } from "rxjs";
+import { map } from "rxjs/operators";
+import { ApplicationClaimType } from "../enums/application-claim-type.enum";
+import { AuthenticationType } from "../enums/authentication-type.enum";
+import { ExternalAuthentication } from "../interfaces/external-authentication";
 import { ApplicationUserModel } from "../models/application-user.model";
 import { UserCredentialsModel } from "../models/user-credentials.model";
-import { ApplicationClaimType } from "../enums/application-claim-type.enum";
 import { AzureAdAuthenticationService } from "./azure-ad-authentication.service";
-import { AuthenticationType } from "../enums/authentication-type.enum";
-import { LocalStorageKeys } from "@core/local-storage-keys";
-import { ExternalAuthentication } from "../interfaces/external-authentication";
-import { environment } from "@environments/environment.prod";
 
 @Injectable({
   providedIn: "root"

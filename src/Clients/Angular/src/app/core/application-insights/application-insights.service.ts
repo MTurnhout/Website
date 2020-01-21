@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
-import { ApplicationInsights } from "@microsoft/applicationinsights-web";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { environment } from "@environments/environment";
+import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 import { filter, map, mergeMap } from "rxjs/operators";
 
 @Injectable({

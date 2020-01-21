@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
-import { AuthenticationGuard, ApplicationClaimType } from "@core/security";
+import { RouterModule, Routes } from "@angular/router";
+import { ApplicationClaimType, AuthenticationGuard } from "@core/security";
 
 const routes: Routes = [
   { path: "", redirectTo: "/blog", pathMatch: "full" },

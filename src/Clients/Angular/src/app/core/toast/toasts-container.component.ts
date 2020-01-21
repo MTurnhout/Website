@@ -1,4 +1,4 @@
-import { Component, TemplateRef, HostBinding } from "@angular/core";
+import { Component, TemplateRef } from "@angular/core";
 import { ToastService } from "./toast.service";
 
 @Component({
@@ -28,7 +28,7 @@ import { ToastService } from "./toast.service";
 export class ToastsContainerComponent {
   constructor(public toastService: ToastService) {}
 
-  isTemplate(toast: any) {
+  public isTemplate(toast: any) {
     return toast.textOrTpl instanceof TemplateRef;
   }
 }

@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
 import {
+  HttpEvent,
+  HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpHandler,
-  HttpEvent,
   HttpResponse
 } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 
@@ -13,7 +13,7 @@ import { tap } from "rxjs/operators";
 export class JsonDateHttpInterceptor implements HttpInterceptor {
   private iso8601: RegExp = /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(([+-]\d\d:\d\d)|Z)?$/;
 
-  intercept(
+  public intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
@@ -26,7 +26,7 @@ export class JsonDateHttpInterceptor implements HttpInterceptor {
     );
   }
 
-  convertToDate(body: any) {
+  public convertToDate(body: any) {
     // Ability to configure HttpClient JSON.parse reviver would be nice
     if (body === null || body === undefined || typeof body !== "object") {
       return body;

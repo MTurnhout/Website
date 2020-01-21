@@ -3,5 +3,8 @@
     "node_modules/": true
   },
   "git.autofetch": true,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true
+  }
 }

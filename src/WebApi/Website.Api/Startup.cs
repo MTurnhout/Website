@@ -189,7 +189,7 @@ namespace Website.Api
             app.Run(async (context) =>
             {
                 context.Response.ContentType = "text/html";
-                await context.Response.SendFileAsync(Path.Combine(this.environment.WebRootPath, "index.html"));
+                await context.Response.SendFileAsync(System.IO.Path.Combine(this.environment.WebRootPath, "index.html"));
             });
         }
 #endif

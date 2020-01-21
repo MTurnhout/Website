@@ -55,7 +55,9 @@ namespace Website.Api.ReCaptcha
 
 #if !DEBUG
                 if (!string.IsNullOrWhiteSpace(remoteIp))
+                {
                     values.Add("remoteip", remoteIp);
+                }
 #endif
 
                 using var client = new WebClient();

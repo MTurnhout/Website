@@ -11,8 +11,16 @@ namespace Website.Api
     using Microsoft.Extensions.DependencyInjection;
     using Website.Api.ReCaptcha;
 
+    /// <summary>
+    /// Contains extension methods for <see cref="IServiceCollection"/>.
+    /// </summary>
     public static class IServiceCollectionExtension
     {
+        /// <summary>
+        /// Adds services to dependency injection that are in API project.
+        /// </summary>
+        /// <param name="services"><see cref="IServiceCollection"/> being extended.</param>
+        /// <returns>Extended <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddApiServices(
             this IServiceCollection services)
         {

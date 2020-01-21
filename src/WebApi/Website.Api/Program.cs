@@ -10,15 +10,21 @@ namespace Website.Api
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
 
+    /// <summary>
+    /// The main program class.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Run Web API.
+        /// </summary>
+        /// <param name="args">Arguments.</param>
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
-        }
-
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .Build()
+                .Run();
+        }
     }
 }

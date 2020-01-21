@@ -25,18 +25,30 @@ namespace Website.Api
     using Website.Business.Settings;
     using Website.Common.Database;
 
+    /// <summary>
+    /// A startup class used to setup the web host.
+    /// </summary>
     public class Startup
     {
         private readonly IConfiguration configuration;
         private readonly IWebHostEnvironment environment;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// </summary>
+        /// <param name="configuration">A instance of <see cref="IConfiguration"/>.</param>
+        /// <param name="environment">A instance of <see cref="IWebHostEnvironment"/>.</param>
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             this.configuration = configuration;
             this.environment = environment;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime.
+        /// Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services">A instance of <see cref="IServiceCollection"/>.</param>
         public void ConfigureServices(IServiceCollection services)
         {
             // Settings
@@ -127,7 +139,11 @@ namespace Website.Api
             services.AddApiServices();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime.
+        /// Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app">A instance of <see cref="IApplicationBuilder"/>.</param>
         public void Configure(IApplicationBuilder app)
         {
             int cachePeriod;

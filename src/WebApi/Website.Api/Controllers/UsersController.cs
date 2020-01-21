@@ -18,7 +18,6 @@ namespace Website.Api.Controllers
     /// A Web API controller that provides access to users data.
     /// </summary>
     [Route("api/[controller]")]
-    [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -49,7 +48,7 @@ namespace Website.Api.Controllers
         /// <returns>A action result containing user information, see <see cref="ApplicationUserModel"/>.</returns>
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public ActionResult<ApplicationUserModel> Post([FromBody] UserCredentials userCredentials)
+        public ActionResult<ApplicationUserModel> Post(UserCredentials userCredentials)
         {
             var remoteIp = this.accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
             var validReCaptcha = this.recaptchaService.Validate(userCredentials.Recaptcha, remoteIp);

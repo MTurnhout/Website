@@ -9,7 +9,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/Website.Api/bin/Debug/netcoreapp3.0/Mt.Website.Api.dll",
+      "program": "${workspaceFolder}/Website.Api/bin/Debug/netcoreapp3.1/Mt.Website.Api.dll",
       "args": [],
       "cwd": "${workspaceFolder}/Website.Api",
       "stopAtEntry": false,

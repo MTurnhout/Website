@@ -21,7 +21,6 @@ namespace Website.Api
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
     using Website.Api.ReCaptcha;
-    using Website.Business;
     using Website.Business.Settings;
     using Website.Common.Database;
 
@@ -120,8 +119,8 @@ namespace Website.Api
                     });
             }
 
-            // Configure database connection
-            services.AddBusinessServices(new DatabaseSettings
+            // Load project dependencies
+            services.AddApiServices(new DatabaseSettings
             {
                 DatabaseType = DatabaseType.MsSql,
                 ConnectionString = this.configuration.GetConnectionString("DefaultConnection"),
@@ -135,8 +134,6 @@ namespace Website.Api
                     .Build();
                 o.Filters.Add(new AuthorizeFilter(policy));
             });
-
-            services.AddApiServices();
         }
 
         /// <summary>

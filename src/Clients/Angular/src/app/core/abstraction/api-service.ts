@@ -70,11 +70,14 @@ export abstract class ApiService {
   }
 
   private handleError(error: any): Observable<never> {
-    const errorMessage = error.message
-      ? error.message
-      : error.status
-      ? `${error.status} - ${error.statusText}`
-      : "Server error";
+    let errorMessage = "Server error";
+    if (error) {
+      if (error.message) {
+        errorMessage = error.message;
+      } else if (error.status) {
+        errorMessage = `${error.status} - ${error.statusText}`;
+      }
+    }
 
     // tslint:disable-next-line: no-console
     console.error(errorMessage);

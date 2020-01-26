@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mt.Website.Api", "Website.Api\Mt.Website.Api.csproj", "{37168EAF-A994-41B9-9875-3648A5EEEAB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mt.Website.Api", "src\Website.Api\Mt.Website.Api.csproj", "{37168EAF-A994-41B9-9875-3648A5EEEAB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mt.Website.Business", "Website.Business\Mt.Website.Business.csproj", "{5CF49DA8-662B-48E8-B7B4-3B1F25E24E42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mt.Website.Business", "src\Website.Business\Mt.Website.Business.csproj", "{5CF49DA8-662B-48E8-B7B4-3B1F25E24E42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mt.Website.Data", "Website.Data\Mt.Website.Data.csproj", "{FBB1BA12-1ABD-4DC9-840E-58E2025F33A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mt.Website.Data", "src\Website.Data\Mt.Website.Data.csproj", "{FBB1BA12-1ABD-4DC9-840E-58E2025F33A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website.Common", "Website.Common\Website.Common.csproj", "{1FA81C07-669F-4325-88B8-FC100822ADAF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website.Common", "src\Website.Common\Website.Common.csproj", "{1FA81C07-669F-4325-88B8-FC100822ADAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,13 +5,13 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Data
+namespace Website.Persistence
 {
     using System;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Website.Common.Database;
-    using Website.Data.Entity;
+    using Website.Persistence.Entity;
 
     /// <summary>
     /// Contains extension methods for <see cref="IServiceCollection"/>.
@@ -19,7 +19,7 @@ namespace Website.Data
     public static class IServiceCollectionExtension
     {
         /// <summary>
-        /// Adds services to dependency injection that are in data project.
+        /// Adds services to dependency injection that are in persistence project.
         /// </summary>
         /// <param name="services"><see cref="IServiceCollection"/> being extended.</param>
         /// <param name="databaseSettings">Database settings.</param>

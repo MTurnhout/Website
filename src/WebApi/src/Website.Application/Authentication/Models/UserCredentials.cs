@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Business.Authentication.Models
+namespace Website.Application.Authentication.Models
 {
     /// <summary>
     /// Model that contains the user credentials.

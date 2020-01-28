@@ -5,11 +5,11 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Data.Entity
+namespace Website.Persistence.Entity
 {
     using System;
     using Microsoft.EntityFrameworkCore;
-    using Website.Data.Entity.Extensions;
+    using Website.Persistence.Entity.Extensions;
 
     internal class WebsiteContext : DbContext
     {

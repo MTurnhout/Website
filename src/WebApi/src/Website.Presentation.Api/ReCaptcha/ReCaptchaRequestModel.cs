@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Api.ReCaptcha
+namespace Website.Presentation.Api.ReCaptcha
 {
     using System.Text.Json.Serialization;
 

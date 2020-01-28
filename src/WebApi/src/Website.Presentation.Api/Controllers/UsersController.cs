@@ -5,14 +5,14 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Api.Controllers
+namespace Website.Presentation.Api.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Website.Api.ReCaptcha;
-    using Website.Business.Authentication;
-    using Website.Business.Authentication.Models;
+    using Website.Application.Authentication;
+    using Website.Application.Authentication.Models;
+    using Website.Presentation.Api.ReCaptcha;
 
     /// <summary>
     /// A Web API controller that provides access to users data.

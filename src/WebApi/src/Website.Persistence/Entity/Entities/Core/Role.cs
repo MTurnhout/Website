@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Data.Entity
+namespace Website.Persistence.Entity
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;

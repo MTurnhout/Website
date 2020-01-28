@@ -5,10 +5,10 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Business.Authentication
+namespace Website.Application.Authentication
 {
     using System.Security.Claims;
-    using Website.Business.Authentication.Models;
+    using Website.Application.Authentication.Models;
 
     /// <summary>
     /// Authentication services that helps authenticate a user.

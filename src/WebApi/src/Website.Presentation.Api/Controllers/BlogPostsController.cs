@@ -5,12 +5,12 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Api.Controllers
+namespace Website.Presentation.Api.Controllers
 {
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Website.Business.Blog;
+    using Website.Application.Blog;
     using Website.Common.Blog.Models;
 
     /// <summary>

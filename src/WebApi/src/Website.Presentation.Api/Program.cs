@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Api
+namespace Website.Presentation.Api
 {
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;

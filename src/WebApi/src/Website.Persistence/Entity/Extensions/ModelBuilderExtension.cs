@@ -5,13 +5,13 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Data.Entity.Extensions
+namespace Website.Persistence.Entity.Extensions
 {
     using System;
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-    using Website.Data.Entity.Converters;
+    using Website.Persistence.Entity.Converters;
 
     /// <summary>
     /// Contains extension methods for <see cref="ModelBuilder"/>.

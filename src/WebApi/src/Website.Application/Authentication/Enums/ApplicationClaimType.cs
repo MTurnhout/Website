@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Business.Authentication.Enums
+namespace Website.Application.Authentication.Enums
 {
     /// <summary>
     /// The application claim types.

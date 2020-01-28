@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Business.Settings
+namespace Website.Application.Settings
 {
     /// <summary>
     /// Application insights settings.

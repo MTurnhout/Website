@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Business.Authentication
+namespace Website.Application.Authentication
 {
     using System;
     using System.Collections.Generic;
@@ -14,9 +14,9 @@ namespace Website.Business.Authentication
     using System.Text;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
-    using Website.Business.Authentication.Enums;
-    using Website.Business.Authentication.Models;
-    using Website.Business.Settings;
+    using Website.Application.Authentication.Enums;
+    using Website.Application.Authentication.Models;
+    using Website.Application.Settings;
 
     /// <summary>
     /// Authentication services that helps authenticate a user.

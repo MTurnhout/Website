@@ -7,7 +7,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/Website.Api/Mt.Website.Api.csproj",
+        "${workspaceFolder}/Website.Presentation.Api/Mt.Website.Presentation.Api.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -19,7 +19,7 @@
       "type": "process",
       "args": [
         "publish",
-        "${workspaceFolder}/Website.Api/Mt.Website.Api.csproj",
+        "${workspaceFolder}/Website.Presentation.Api/Mt.Website.Presentation.Api.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -32,7 +32,7 @@
       "args": [
         "watch",
         "run",
-        "${workspaceFolder}/Website.Api/Mt.Website.Api.csproj",
+        "${workspaceFolder}/Website.Presentation.Api/Mt.Website.Presentation.Api.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],

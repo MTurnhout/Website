@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Business.Blog
+namespace Website.Application.Blog
 {
     using System;
     using System.Collections.Generic;

@@ -5,12 +5,9 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Application
+namespace Website.Domain
 {
     using Microsoft.Extensions.DependencyInjection;
-    using Website.Application.Authentication;
-    using Website.Common.Database;
-    using Website.Persistence;
 
     /// <summary>
     /// Contains extension methods for <see cref="IServiceCollection"/>.
@@ -18,19 +15,13 @@ namespace Website.Application
     public static class IServiceCollectionExtension
     {
         /// <summary>
-        /// Adds services to dependency injection that are in application project.
+        /// Adds services to dependency injection that are in domain project.
         /// </summary>
         /// <param name="services"><see cref="IServiceCollection"/> being extended.</param>
-        /// <param name="databaseSettings">Database settings.</param>
         /// <returns>Extended <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection AddBusinessServices(
-            this IServiceCollection services,
-            DatabaseSettings databaseSettings)
+        public static IServiceCollection AddCommonServices(
+            this IServiceCollection services)
         {
-            services.AddDataServices(databaseSettings);
-
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
-
             return services;
         }
     }

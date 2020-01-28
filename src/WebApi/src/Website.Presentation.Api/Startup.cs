@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Api
+namespace Website.Presentation.Api
 {
     using System;
     using System.Collections.Generic;
@@ -20,9 +20,9 @@ namespace Website.Api
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
-    using Website.Api.ReCaptcha;
-    using Website.Business.Settings;
+    using Website.Application.Settings;
     using Website.Common.Database;
+    using Website.Presentation.Api.ReCaptcha;
 
     /// <summary>
     /// A startup class used to setup the web host.

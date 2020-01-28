@@ -5,10 +5,10 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Business.Authentication.Models
+namespace Website.Application.Authentication.Models
 {
     using System.Collections.Generic;
-    using Website.Business.Authentication.Enums;
+    using Website.Application.Authentication.Enums;
 
     /// <summary>
     /// Model that contains authenticated user details.

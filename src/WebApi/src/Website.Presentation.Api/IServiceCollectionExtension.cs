@@ -5,13 +5,14 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Api
+namespace Website.Presentation.Api
 {
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
-    using Website.Api.ReCaptcha;
-    using Website.Business;
+    using Website.Application;
+    using Website.Common;
     using Website.Common.Database;
+    using Website.Presentation.Api.ReCaptcha;
 
     /// <summary>
     /// Contains extension methods for <see cref="IServiceCollection"/>.
@@ -28,6 +29,7 @@ namespace Website.Api
             this IServiceCollection services,
             DatabaseSettings databaseSettings)
         {
+            services.AddCommonServices();
             services.AddBusinessServices(databaseSettings);
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

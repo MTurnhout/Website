@@ -11,7 +11,7 @@ namespace Website.Persistence
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Website.Common.Database;
-    using Website.Persistence.Entity;
+    using Website.Persistence.Shared;
 
     /// <summary>
     /// Contains extension methods for <see cref="IServiceCollection"/>.
@@ -24,14 +24,14 @@ namespace Website.Persistence
         /// <param name="services"><see cref="IServiceCollection"/> being extended.</param>
         /// <param name="databaseSettings">Database settings.</param>
         /// <returns>Extended <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection AddDataServices(
+        public static IServiceCollection AddPersistenceServices(
             this IServiceCollection services,
             DatabaseSettings databaseSettings)
         {
             switch (databaseSettings.DatabaseType)
             {
                 case DatabaseType.MsSql:
-                    services.AddDbContext<WebsiteContext>(options =>
+                    services.AddDbContext<DatabaseContext>(options =>
                         options.UseSqlServer(databaseSettings.ConnectionString));
                     break;
                 default:

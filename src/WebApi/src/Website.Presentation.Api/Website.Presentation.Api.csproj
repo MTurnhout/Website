@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Website.Application\Website.Application.csproj" />
     <ProjectReference Include="..\Website.Common\Website.Common.csproj" />
+    <ProjectReference Include="..\Website.Persistence\Website.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

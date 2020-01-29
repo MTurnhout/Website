@@ -21,4 +21,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Website.Application\Website.Application.csproj" />
+    <ProjectReference Include="..\Website.Common\Website.Common.csproj" />
+  </ItemGroup>
+
 </Project>

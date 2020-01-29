@@ -12,6 +12,7 @@ namespace Website.Presentation.Api
     using Website.Application;
     using Website.Common;
     using Website.Common.Database;
+    using Website.Persistence;
     using Website.Presentation.Api.ReCaptcha;
 
     /// <summary>
@@ -30,7 +31,8 @@ namespace Website.Presentation.Api
             DatabaseSettings databaseSettings)
         {
             services.AddCommonServices();
-            services.AddBusinessServices(databaseSettings);
+            services.AddApplicationServices();
+            services.AddPersistenceServices(databaseSettings);
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IReCaptchaService, ReCaptchaService>();

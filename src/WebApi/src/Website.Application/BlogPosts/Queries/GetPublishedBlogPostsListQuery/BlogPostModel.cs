@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Common.Blog.Models
+namespace Website.Application.BlogPosts.Queries.GetPublishedBlogPostsListQuery
 {
     using System;
 
@@ -15,10 +15,22 @@ namespace Website.Common.Blog.Models
     public class BlogPostModel
     {
         /// <summary>
+        /// Gets or sets the identifier of the blog post.
+        /// </summary>
+        /// <value>The identifier of the blog post.</value>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Gets or sets the published date of the blog post.
         /// </summary>
         /// <value>The published date of the blog post.</value>
         public DateTime PublishedAt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user name of user that created or modified of the blog post.
+        /// </summary>
+        /// <value>The user name of user that created or modified of the blog post.</value>
+        public string UserName { get; set; }
 
         /// <summary>
         /// Gets or sets the headline of the blog post.

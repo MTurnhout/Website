@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Persistence.Entity.Converters
+namespace Website.Persistence.Shared.Converters
 {
     using System;
     using Microsoft.EntityFrameworkCore.Storage.ValueConversion;

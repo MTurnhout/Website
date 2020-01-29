@@ -9,8 +9,6 @@ namespace Website.Application
 {
     using Microsoft.Extensions.DependencyInjection;
     using Website.Application.Authentication;
-    using Website.Common.Database;
-    using Website.Persistence;
 
     /// <summary>
     /// Contains extension methods for <see cref="IServiceCollection"/>.
@@ -21,14 +19,10 @@ namespace Website.Application
         /// Adds services to dependency injection that are in application project.
         /// </summary>
         /// <param name="services"><see cref="IServiceCollection"/> being extended.</param>
-        /// <param name="databaseSettings">Database settings.</param>
         /// <returns>Extended <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection AddBusinessServices(
-            this IServiceCollection services,
-            DatabaseSettings databaseSettings)
+        public static IServiceCollection AddApplicationServices(
+            this IServiceCollection services)
         {
-            services.AddDataServices(databaseSettings);
-
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             return services;

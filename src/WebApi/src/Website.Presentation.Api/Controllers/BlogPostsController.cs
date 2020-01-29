@@ -10,8 +10,7 @@ namespace Website.Presentation.Api.Controllers
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Website.Application.Blog;
-    using Website.Common.Blog.Models;
+    using Website.Application.BlogPosts.Queries.GetPublishedBlogPostsListQuery;
 
     /// <summary>
     /// A Web API controller that provides access to blog post data.
@@ -20,15 +19,16 @@ namespace Website.Presentation.Api.Controllers
     [ApiController]
     public class BlogPostsController : ControllerBase
     {
-        private readonly IBlogPostsService blogPostService;
+        private readonly IGetPublishedBlogPostsListQuery getPublishedBlogPostsListQuery;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogPostsController"/> class.
         /// </summary>
-        /// <param name="blogPostService">A instance of <see cref="IBlogPostsService"/>.</param>
-        public BlogPostsController(IBlogPostsService blogPostService)
+        /// <param name="getPublishedBlogPostsListQuery">A instance of <see cref="IGetPublishedBlogPostsListQuery"/>.</param>
+        public BlogPostsController(
+            IGetPublishedBlogPostsListQuery getPublishedBlogPostsListQuery)
         {
-            this.blogPostService = blogPostService;
+            this.getPublishedBlogPostsListQuery = getPublishedBlogPostsListQuery;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Website.Presentation.Api.Controllers
         [HttpGet]
         public ActionResult<List<BlogPostModel>> Get()
         {
-            var blogPosts = this.blogPostService.GetBlogPosts();
+            var blogPosts = this.getPublishedBlogPostsListQuery.Execute();
 
             return this.Ok(blogPosts);
         }

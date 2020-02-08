@@ -6,4 +6,4 @@ obj/
 src/Clients/Angular/node_modules/
 
 # WebApi #
-src/WebApi/Website.Api/wwwroot/
+src/WebApi/src/Website.Presentation.Api/wwwroot/

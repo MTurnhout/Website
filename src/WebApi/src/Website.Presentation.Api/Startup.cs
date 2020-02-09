@@ -20,6 +20,7 @@ namespace Website.Presentation.Api
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
+    using Microsoft.OpenApi.Models;
     using Website.Application.Settings;
     using Website.Common.Database;
     using Website.Presentation.Api.ReCaptcha;
@@ -127,12 +128,17 @@ namespace Website.Presentation.Api
             });
 
             // API
-            services.AddControllers(o =>
+            services.AddMvc(o =>
             {
                 var policy = new AuthorizationPolicyBuilder(authenticationSchemes.ToArray())
                     .RequireAuthenticatedUser()
                     .Build();
                 o.Filters.Add(new AuthorizeFilter(policy));
+            });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Website API", Version = "v1" });
             });
         }
 
@@ -175,6 +181,10 @@ namespace Website.Presentation.Api
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // Swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Website API V1"));
 
             // API
             app.UseEndpoints(endpoints =>

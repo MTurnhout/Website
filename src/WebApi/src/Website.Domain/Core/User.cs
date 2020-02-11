@@ -7,11 +7,16 @@
 
 namespace Website.Domain.Core
 {
+    using System;
     using Website.Domain.Common;
 
     public class User : IEntity
     {
         public int Id { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime ModifiedAt { get; set; }
 
         public string UserName { get; set; }
 

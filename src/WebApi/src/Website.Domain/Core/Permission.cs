@@ -7,11 +7,16 @@
 
 namespace Website.Domain.Core
 {
+    using System;
     using Website.Domain.Common;
 
     public class Permission : IEntity
     {
         public int Id { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime ModifiedAt { get; set; }
 
         public string Name { get; set; }
     }

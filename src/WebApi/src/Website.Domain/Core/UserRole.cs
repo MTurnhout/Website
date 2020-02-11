@@ -7,6 +7,7 @@
 
 namespace Website.Domain.Core
 {
+    using System;
     using Website.Domain.Common;
 
     public class UserRole : IEntity
@@ -16,6 +17,10 @@ namespace Website.Domain.Core
         /// </summary>
         /// <value>The identifier of the user role.</value>
         public int Id { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime ModifiedAt { get; set; }
 
         /// <summary>
         /// Gets or sets user identifier of user role.

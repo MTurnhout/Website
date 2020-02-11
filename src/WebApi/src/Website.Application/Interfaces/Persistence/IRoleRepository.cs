@@ -1,20 +1,15 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IEntity.cs" company="Martijn Turnhout">
+// <copyright file="IRoleRepository.cs" company="Martijn Turnhout">
 //     Copyright (c) Martijn Turnhout. All Rights Reserved.
 // </copyright>
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace Website.Domain.Common
+namespace Website.Application.Interfaces.Persistence
 {
-    using System;
+    using Website.Domain.Core;
 
-    public interface IEntity
+    public interface IRoleRepository : IRepository<Role>
     {
-        int Id { get; set; }
-
-        DateTime CreatedAt { get; set; }
-
-        DateTime ModifiedAt { get; set; }
     }
 }

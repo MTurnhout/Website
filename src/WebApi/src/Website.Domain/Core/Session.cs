@@ -14,11 +14,13 @@ namespace Website.Domain.Core
     {
         public int Id { get; set; }
 
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime ModifiedAt { get; set; }
+
         public int UserId { get; set; }
 
         public User User { get; set; }
-
-        public DateTime SessionAt { get; set; }
 
         public string IpAddress { get; set; }
     }

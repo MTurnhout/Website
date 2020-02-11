@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="UserConfiguration.cs" company="Martijn Turnhout">
+// <copyright file="UserRoleConfiguration.cs" company="Martijn Turnhout">
 //     Copyright (c) Martijn Turnhout. All Rights Reserved.
 // </copyright>
 // <author>Martijn Turnhout</author>
@@ -11,10 +11,10 @@ namespace CleanArchitecture.Persistence.Customers
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using Website.Domain.Core;
 
-    public class UserConfiguration
-        : IEntityTypeConfiguration<User>
+    public class UserRoleConfiguration
+        : IEntityTypeConfiguration<UserRole>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<UserRole> builder)
         {
             builder.HasKey(e => e.Id);
             builder.Property(e => e.CreatedAt)

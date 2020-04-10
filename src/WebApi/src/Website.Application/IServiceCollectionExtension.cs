@@ -9,6 +9,7 @@ namespace Website.Application
 {
     using Microsoft.Extensions.DependencyInjection;
     using Website.Application.Authentication;
+    using Website.Application.Blog;
     using Website.Common.Database;
     using Website.Persistence;
 
@@ -30,6 +31,8 @@ namespace Website.Application
             services.AddDataServices(databaseSettings);
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+            services.AddScoped<IBlogPostsService, BlogPostsService>();
 
             return services;
         }

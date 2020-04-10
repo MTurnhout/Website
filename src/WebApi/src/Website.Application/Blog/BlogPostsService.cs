@@ -14,7 +14,7 @@ namespace Website.Application.Blog
     /// <summary>
     /// Blog post service that provides access to blog post data.
     /// </summary>
-    public class BlogPostsService
+    public class BlogPostsService : IBlogPostsService
     {
         /// <summary>
         /// Get all the blog posts.

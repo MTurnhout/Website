@@ -8,6 +8,6 @@ import { PostComponent } from "./post/post.component";
 
 @NgModule({
   declarations: [BlogComponent, PostListComponent, PostComponent],
-  imports: [CommonModule, BlogRoutingModule, SharedModule]
+  imports: [CommonModule, BlogRoutingModule, SharedModule],
 })
 export class BlogModule {}

@@ -6,6 +6,6 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 @NgModule({
   declarations: [],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbModule],
-  exports: [FormsModule, ReactiveFormsModule, NgbModule]
+  exports: [FormsModule, ReactiveFormsModule, NgbModule],
 })
 export class SharedModule {}

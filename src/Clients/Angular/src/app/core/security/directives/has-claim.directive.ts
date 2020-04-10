@@ -3,7 +3,7 @@ import { ApplicationClaimType } from "../enums/application-claim-type.enum";
 import { SecurityService } from "../services/security.service";
 
 @Directive({
-  selector: "[appHasClaim]"
+  selector: "[appHasClaim]",
 })
 export class HasClaimDirective {
   private claimTypes: ApplicationClaimType[];

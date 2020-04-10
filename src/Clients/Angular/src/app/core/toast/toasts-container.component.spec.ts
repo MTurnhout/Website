@@ -8,7 +8,7 @@ describe("ToastsContainerComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ToastsContainerComponent]
+      declarations: [ToastsContainerComponent],
     }).compileComponents();
   }));
 

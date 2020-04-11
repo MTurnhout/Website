@@ -8,8 +8,11 @@
 namespace Website.Persistence
 {
     using System;
+    using CleanArchitecture.Persistence.BlogPosts;
+    using CleanArchitecture.Persistence.Customers;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Website.Application.Interfaces.Persistence;
     using Website.Common.Database;
     using Website.Persistence.Shared;
 
@@ -31,12 +34,21 @@ namespace Website.Persistence
             switch (databaseSettings.DatabaseType)
             {
                 case DatabaseType.MsSql:
-                    services.AddDbContext<DatabaseContext>(options =>
+                    services.AddDbContext<IDatabaseContext, DatabaseContext>(options =>
                         options.UseSqlServer(databaseSettings.ConnectionString));
                     break;
                 default:
                     throw new NotImplementedException(nameof(DatabaseType));
             }
+
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
+            services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<ISessionRepository, SessionRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+
+            services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 
             return services;
         }

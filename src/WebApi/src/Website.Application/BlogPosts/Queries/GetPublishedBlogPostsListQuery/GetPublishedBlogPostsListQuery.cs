@@ -22,20 +22,25 @@ namespace Website.Application.BlogPosts.Queries.GetPublishedBlogPostsListQuery
 
         public List<BlogPostModel> Execute()
         {
-            var blogPostsQuery = this.repository.GetAll()
-                .Where(bp => bp.PublishedAt.HasValue)
-                .OrderByDescending(bp => bp.PublishedAt)
-                .Select(bp => new BlogPostModel
-                {
-                    Id = bp.Id,
-                    PublishedAt = bp.PublishedAt.Value,
-                    UserName = bp.ModifiedBy.UserName,
-                    Headline = bp.Headline,
-                    Intro = bp.Intro,
-                    Body = bp.Body,
-                });
+            // var blogPostsQuery = this.repository.GetAll()
+            //     .Where(bp => bp.PublishedAt.HasValue)
+            //     .OrderByDescending(bp => bp.PublishedAt)
+            //     .Select(bp => new BlogPostModel
+            //     {
+            //         Id = bp.Id,
+            //         PublishedAt = bp.PublishedAt.Value,
+            //         UserName = bp.ModifiedBy.UserName,
+            //         Headline = bp.Headline,
+            //         Intro = bp.Intro,
+            //         Body = bp.Body,
+            //     });
 
-            return blogPostsQuery.ToList();
+            // return blogPostsQuery.ToList();
+
+            return new List<BlogPostModel>
+            {
+                new BlogPostModel { Headline = "Test" }
+            };
         }
     }
 }

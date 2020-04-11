@@ -1,7 +1,7 @@
 import { Injectable, TemplateRef } from "@angular/core";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class ToastService {
   public toasts: any[] = [];
@@ -23,7 +23,7 @@ export class ToastService {
   }
 
   public remove(toast: any) {
-    this.toasts = this.toasts.filter(t => t !== toast);
+    this.toasts = this.toasts.filter((t) => t !== toast);
   }
 
   private showToast(textOrTpl: string | TemplateRef<any>, options: any = {}) {

@@ -4,14 +4,14 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree
+  UrlTree,
 } from "@angular/router";
 import { ToastService } from "@core/toast";
 import { Observable } from "rxjs";
 import { SecurityService } from "../services/security.service";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class AuthenticationGuard implements CanActivate {
   constructor(
@@ -42,7 +42,7 @@ export class AuthenticationGuard implements CanActivate {
       this.toastService.showWarning("Not authorized to view this page!");
     } else {
       this.router.navigate(["/login"], {
-        queryParams: { returnUrl: state.url }
+        queryParams: { returnUrl: state.url },
       });
     }
 

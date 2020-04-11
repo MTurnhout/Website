@@ -23,7 +23,7 @@ import { ToastService } from "./toast.service";
         <ng-template #text>{{ toast.textOrTpl }}</ng-template>
       </ngb-toast>
     </div>
-  `
+  `,
 })
 export class ToastsContainerComponent {
   constructor(public toastService: ToastService) {}

@@ -5,7 +5,7 @@ import { JsonDateHttpInterceptor } from "@core/interceptors/json-date-http-inter
 import {
   JwtInterceptor,
   SecurityService,
-  UnauthorizedErrorInterceptor
+  UnauthorizedErrorInterceptor,
 } from "@core/security";
 import { ToastsContainerComponent } from "@core/toast";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -21,21 +21,21 @@ import { HasClaimDirective } from "./core/security/directives/has-claim.directiv
       provide: APP_INITIALIZER,
       useFactory: loadCurrentUser,
       deps: [SecurityService],
-      multi: true
+      multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JsonDateHttpInterceptor,
-      multi: true
+      multi: true,
     },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: UnauthorizedErrorInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
 

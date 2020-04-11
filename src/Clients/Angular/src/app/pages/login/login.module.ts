@@ -12,7 +12,7 @@ import { LoginComponent } from "./login.component";
     LoginRoutingModule,
     SharedModule,
     RecaptchaModule,
-    RecaptchaFormsModule
-  ]
+    RecaptchaFormsModule,
+  ],
 })
 export class LoginModule {}

@@ -14,7 +14,7 @@ import { UserCredentialsModel } from "../models/user-credentials.model";
 import { AzureAdAuthenticationService } from "./azure-ad-authentication.service";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class SecurityService extends ApiService {
   public applicationUser = new ApplicationUserModel();
@@ -36,7 +36,7 @@ export class SecurityService extends ApiService {
       userCredentials,
       "/authenticate"
     ).pipe(
-      map(user => {
+      map((user) => {
         this.localStorage.setUserItem(
           LocalStorageKeys.AccessToken,
           user.bearerToken
@@ -70,7 +70,7 @@ export class SecurityService extends ApiService {
 
   public hasClaim(claim: ApplicationClaimType | ApplicationClaimType[]) {
     if (Array.isArray(claim)) {
-      return this.applicationUser.claims.some(c => claim.includes(c));
+      return this.applicationUser.claims.some((c) => claim.includes(c));
     } else {
       return this.applicationUser.claims.includes(claim);
     }
@@ -113,7 +113,7 @@ export class SecurityService extends ApiService {
   private loadCurrentUser(): Promise<ApplicationUserModel> {
     return this.get<ApplicationUserModel>("/current")
       .pipe(
-        map(applicationUser => {
+        map((applicationUser) => {
           if (applicationUser) {
             this.updateUser(applicationUser);
           } else {

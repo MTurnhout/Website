@@ -5,13 +5,13 @@ import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 import { filter, map, mergeMap } from "rxjs/operators";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class ApplicationInsightsService {
   private appInsights = new ApplicationInsights({
     config: {
-      instrumentationKey: environment.applicationInsights.instrumentationKey
-    }
+      instrumentationKey: environment.applicationInsights.instrumentationKey,
+    },
   });
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
@@ -23,18 +23,18 @@ export class ApplicationInsightsService {
   private trackPageViews(): void {
     this.router.events
       .pipe(
-        filter(event => event instanceof NavigationEnd),
+        filter((event) => event instanceof NavigationEnd),
         map(() => this.activatedRoute),
-        map(route => {
+        map((route) => {
           while (route.firstChild) {
             route = route.firstChild;
           }
           return route;
         }),
-        filter(route => route.outlet === "primary"),
-        mergeMap(route => route.data)
+        filter((route) => route.outlet === "primary"),
+        mergeMap((route) => route.data)
       )
-      .subscribe(event => {
+      .subscribe((event) => {
         this.appInsights.trackPageView(event.title);
       });
   }

@@ -9,6 +9,7 @@ namespace Website.Application
 {
     using Microsoft.Extensions.DependencyInjection;
     using Website.Application.Authentication;
+    using Website.Application.BlogPosts.Queries.GetPublishedBlogPostsListQuery;
 
     /// <summary>
     /// Contains extension methods for <see cref="IServiceCollection"/>.
@@ -24,6 +25,8 @@ namespace Website.Application
             this IServiceCollection services)
         {
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+            services.AddScoped<IGetPublishedBlogPostsListQuery, GetPublishedBlogPostsListQuery>();
 
             return services;
         }

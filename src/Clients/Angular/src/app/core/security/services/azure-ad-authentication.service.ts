@@ -4,12 +4,12 @@ import {
   User,
   UserManager,
   UserManagerSettings,
-  WebStorageStateStore
+  WebStorageStateStore,
 } from "oidc-client";
 import { ExternalAuthentication } from "../interfaces/external-authentication";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class AzureAdAuthenticationService implements ExternalAuthentication {
   private userManager: UserManager;
@@ -31,13 +31,13 @@ export class AzureAdAuthenticationService implements ExternalAuthentication {
       post_logout_redirect_uri: environment.clientUrl,
       extraQueryParams: { resource: azureAdSettings.webApiId },
       loadUserInfo: false,
-      userStore: new WebStorageStateStore({ store: window.localStorage })
+      userStore: new WebStorageStateStore({ store: window.localStorage }),
     };
 
     this.userManager = new UserManager(config);
     this.userPromise = this.loadUser();
 
-    this.userManager.events.addUserLoaded(args => {
+    this.userManager.events.addUserLoaded((args) => {
       this.loadUser();
     });
   }
@@ -59,7 +59,7 @@ export class AzureAdAuthenticationService implements ExternalAuthentication {
   }
 
   private async loadUser(): Promise<User> {
-    return this.userManager.getUser().then(user => {
+    return this.userManager.getUser().then((user) => {
       if (user && !user.expired) {
         this.user = user;
       }

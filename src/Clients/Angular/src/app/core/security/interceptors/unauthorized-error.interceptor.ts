@@ -2,7 +2,7 @@ import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
-  HttpRequest
+  HttpRequest,
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
@@ -21,7 +21,7 @@ export class UnauthorizedErrorInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      catchError(err => {
+      catchError((err) => {
         if (err.status === 401) {
           this.securityService.logout();
           location.reload();

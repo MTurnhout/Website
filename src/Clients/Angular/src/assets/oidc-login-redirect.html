@@ -2,12 +2,12 @@
 <script>
   var config = {
     loadUserInfo: false,
-    userStore: new WebStorageStateStore({ store: window.localStorage })
+    userStore: new WebStorageStateStore({ store: window.localStorage }),
   };
   var mgr = new UserManager(config);
   mgr.signinPopupCallback().then(
     () => {},
-    error => {
+    (error) => {
       console.error(error);
     }
   );

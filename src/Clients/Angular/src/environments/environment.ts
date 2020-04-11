@@ -14,11 +14,11 @@ export const environment = {
     // App registration id of client
     clientId: "ba0156a1-daaa-4b6d-990a-a73283a95a4a",
     // App registration id of web api
-    webApiId: "0be261fe-0e96-4163-b07d-fbac0059c339"
+    webApiId: "0be261fe-0e96-4163-b07d-fbac0059c339",
   },
   applicationInsights: {
-    instrumentationKey: "850af97e-3c89-4da4-aee3-79bfa6cb9a8c"
-  }
+    instrumentationKey: "850af97e-3c89-4da4-aee3-79bfa6cb9a8c",
+  },
 };
 
 /*

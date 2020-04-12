@@ -126,7 +126,7 @@ namespace Website.Presentation.Api
                     });
             }
 
-            // Load project dependencies
+            // Load dependencies
             this.LoadDependencies(services, new DatabaseSettings
             {
                 DatabaseType = DatabaseType.MsSql,
@@ -243,15 +243,15 @@ namespace Website.Presentation.Api
                         typeName.EndsWith("Repository") ||
                         typeName.EndsWith("Query"))
                     {
-                        var interFace = type.GetInterface($"I{typeName}");
-                        if (interFace != null)
+                        var interfaceType = type.GetInterface($"I{typeName}");
+                        if (interfaceType != null)
                         {
-                            services.AddScoped(interFace, type);
+                            services.AddScoped(interfaceType, type);
                         }
                     }
                     else if (typeName == "DatabaseContext")
                     {
-                        var interFace = type.GetInterface($"I{typeName}");
+                        var interfaceType = type.GetInterface($"I{typeName}");
 
                         var addDbContextMethodInfo = (
                             from methodInfo in typeof(EntityFrameworkServiceCollectionExtensions).GetMethods()
@@ -268,7 +268,7 @@ namespace Website.Presentation.Api
                                 parameters[3].ParameterType == typeof(ServiceLifetime)
                             select methodInfo).Single();
 
-                        var addDbContextMethodRef = addDbContextMethodInfo.MakeGenericMethod(interFace, type);
+                        var addDbContextMethodRef = addDbContextMethodInfo.MakeGenericMethod(interfaceType, type);
                         switch (databaseSettings.DatabaseType)
                         {
                             case DatabaseType.MsSql:

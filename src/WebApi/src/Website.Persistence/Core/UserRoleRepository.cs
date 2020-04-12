@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace CleanArchitecture.Persistence.Customers
+namespace Website.Persistence.Customers
 {
     using Website.Application.Interfaces.Persistence;
     using Website.Domain.Core;

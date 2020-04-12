@@ -17,18 +17,32 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0-preview.2.20167.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.0-preview.2.20159.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0-preview.2.20159.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0-preview.2.20160.3" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Website.Application\Website.Application.csproj" />
     <ProjectReference Include="..\Website.Common\Website.Common.csproj" />
-    <ProjectReference Include="..\Website.Persistence\Website.Persistence.csproj" />
+    <ProjectReference Include="..\Website.Infrastructure\Website.Infrastructure.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
+    </ProjectReference>
+    <ProjectReference Include="..\Website.Persistence\Website.Persistence.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Targets>Build;DebugSymbolsProjectOutputGroup</Targets>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

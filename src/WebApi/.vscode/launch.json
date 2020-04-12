@@ -9,9 +9,9 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/Website.Presentation.Api/bin/Debug/netcoreapp3.1/Mt.Website.Presentation.Api.dll",
+      "program": "${workspaceFolder}/src/Website.Presentation.Api/bin/Debug/netcoreapp5.0/Website.Presentation.Api.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/Website.Presentation.Api",
+      "cwd": "${workspaceFolder}/src/Website.Presentation.Api",
       "stopAtEntry": false,
       "launchBrowser": {
         "enabled": false

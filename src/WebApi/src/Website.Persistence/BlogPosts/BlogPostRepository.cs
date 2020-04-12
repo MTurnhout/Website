@@ -5,7 +5,7 @@
 // <author>Martijn Turnhout</author>
 //-----------------------------------------------------------------------
 
-namespace CleanArchitecture.Persistence.BlogPosts
+namespace Website.Persistence.BlogPosts
 {
     using Website.Application.Interfaces.Persistence;
     using Website.Domain.BlogPost;

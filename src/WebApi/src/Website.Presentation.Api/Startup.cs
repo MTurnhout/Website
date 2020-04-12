@@ -9,6 +9,10 @@ namespace Website.Presentation.Api
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Runtime.Loader;
     using System.Text;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Authorization;
@@ -16,8 +20,10 @@ namespace Website.Presentation.Api
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Authorization;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyModel;
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
@@ -121,7 +127,7 @@ namespace Website.Presentation.Api
             }
 
             // Load project dependencies
-            services.AddApiServices(new DatabaseSettings
+            this.LoadDependencies(services, new DatabaseSettings
             {
                 DatabaseType = DatabaseType.MsSql,
                 ConnectionString = this.configuration.GetConnectionString("DefaultConnection"),
@@ -203,5 +209,79 @@ namespace Website.Presentation.Api
             });
         }
 #endif
+
+        private void LoadDependencies(IServiceCollection services, DatabaseSettings databaseSettings)
+        {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            var assemblyLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var persistenceAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(
+                Path.Combine(assemblyLocation, "Website.Persistence.dll"));
+            var infrastructureAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(
+                Path.Combine(assemblyLocation, "Website.Infrastructure.dll"));
+
+            var platform = Environment.OSVersion.Platform.ToString();
+            var assemblies = DependencyContext.Default
+                .GetRuntimeAssemblyNames(platform)
+                .Where(an => an.Name.StartsWith("Website."))
+                .Select(Assembly.Load)
+                .Append(persistenceAssembly)
+                .Append(infrastructureAssembly)
+                .ToList();
+
+            foreach (var assembly in assemblies)
+            {
+                foreach (var type in assembly.DefinedTypes)
+                {
+                    if (!type.IsClass)
+                    {
+                        continue;
+                    }
+
+                    var typeName = type.Name;
+                    if (typeName.EndsWith("Service") ||
+                        typeName.EndsWith("Repository") ||
+                        typeName.EndsWith("Query"))
+                    {
+                        var interFace = type.GetInterface($"I{typeName}");
+                        if (interFace != null)
+                        {
+                            services.AddScoped(interFace, type);
+                        }
+                    }
+                    else if (typeName == "DatabaseContext")
+                    {
+                        var interFace = type.GetInterface($"I{typeName}");
+
+                        var addDbContextMethodInfo = (
+                            from methodInfo in typeof(EntityFrameworkServiceCollectionExtensions).GetMethods()
+                            let genericArguments = methodInfo.GetGenericArguments()
+                            let parameters = methodInfo.GetParameters()
+                            where
+                                methodInfo.IsGenericMethod &&
+                                methodInfo.Name == "AddDbContext" &&
+                                genericArguments.Length == 2 &&
+                                parameters.Length == 4 &&
+                                parameters[0].ParameterType == typeof(IServiceCollection) &&
+                                parameters[1].ParameterType == typeof(Action<DbContextOptionsBuilder>) &&
+                                parameters[2].ParameterType == typeof(ServiceLifetime) &&
+                                parameters[3].ParameterType == typeof(ServiceLifetime)
+                            select methodInfo).Single();
+
+                        var addDbContextMethodRef = addDbContextMethodInfo.MakeGenericMethod(interFace, type);
+                        switch (databaseSettings.DatabaseType)
+                        {
+                            case DatabaseType.MsSql:
+                                Action<DbContextOptionsBuilder> optionsAction = options =>
+                                    options.UseSqlServer(databaseSettings.ConnectionString);
+                                addDbContextMethodRef.Invoke(null, new object[] { services, optionsAction, ServiceLifetime.Scoped, ServiceLifetime.Scoped });
+                                break;
+                            default:
+                                throw new NotImplementedException(nameof(DatabaseType));
+                        }
+                    }
+                }
+            }
+        }
     }
 }

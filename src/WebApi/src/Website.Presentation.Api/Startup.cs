@@ -253,34 +253,26 @@ namespace Website.Presentation.Api
                     {
                         var interfaceType = type.GetInterface($"I{typeName}");
 
-                        var addDbContextMethodInfo = (
-                            from methodInfo in typeof(EntityFrameworkServiceCollectionExtensions).GetMethods()
-                            let genericArguments = methodInfo.GetGenericArguments()
-                            let parameters = methodInfo.GetParameters()
-                            where
-                                methodInfo.IsGenericMethod &&
-                                methodInfo.Name == "AddDbContext" &&
-                                genericArguments.Length == 2 &&
-                                parameters.Length == 4 &&
-                                parameters[0].ParameterType == typeof(IServiceCollection) &&
-                                parameters[1].ParameterType == typeof(Action<DbContextOptionsBuilder>) &&
-                                parameters[2].ParameterType == typeof(ServiceLifetime) &&
-                                parameters[3].ParameterType == typeof(ServiceLifetime)
-                            select methodInfo).Single();
+                        var addDbContextMethodInfo = this.GetType().GetMethod("AddDbContext", BindingFlags.NonPublic | BindingFlags.Instance);
+                        var addDbContextGenericMethodInfo = addDbContextMethodInfo.MakeGenericMethod(interfaceType, type);
 
-                        var addDbContextMethodRef = addDbContextMethodInfo.MakeGenericMethod(interfaceType, type);
-                        switch (databaseSettings.DatabaseType)
-                        {
-                            case DatabaseType.MsSql:
-                                Action<DbContextOptionsBuilder> optionsAction = options =>
-                                    options.UseSqlServer(databaseSettings.ConnectionString);
-                                addDbContextMethodRef.Invoke(null, new object[] { services, optionsAction, ServiceLifetime.Scoped, ServiceLifetime.Scoped });
-                                break;
-                            default:
-                                throw new NotImplementedException(nameof(DatabaseType));
-                        }
+                        addDbContextGenericMethodInfo.Invoke(this, new object[] { services, databaseSettings });
                     }
                 }
+            }
+        }
+
+        private void AddDbContext<TContextService, TContextImplementation>(IServiceCollection services, DatabaseSettings databaseSettings)
+            where TContextImplementation : DbContext, TContextService
+        {
+            switch (databaseSettings.DatabaseType)
+            {
+                case DatabaseType.MsSql:
+                    services.AddDbContext<TContextService, TContextImplementation>(options =>
+                        options.UseSqlServer(databaseSettings.ConnectionString));
+                    break;
+                default:
+                    throw new NotImplementedException(nameof(DatabaseType));
             }
         }
     }

@@ -16,5 +16,10 @@ namespace Website.Common.Database
         /// Microsoft SQL Server.
         /// </summary>
         MsSql,
+
+        /// <summary>
+        /// SQLite.
+        /// </summary>
+        Sqlite,
     }
 }

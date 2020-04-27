@@ -58,7 +58,10 @@ namespace Website.Presentation.Api
         public void ConfigureServices(IServiceCollection services)
         {
             // Settings
-            services.Configure<ApplicationSettings>(this.configuration.GetSection("AppSettings"));
+            var appSettingsSection = this.configuration.GetSection("AppSettings");
+            services.Configure<ApplicationSettings>(appSettingsSection);
+            var appSettings = appSettingsSection.Get<ApplicationSettings>();
+
             services.Configure<ReCaptchaSettings>(this.configuration.GetSection("Recaptcha"));
 
             var jwtSettingsSection = this.configuration.GetSection("Jwt");
@@ -129,7 +132,7 @@ namespace Website.Presentation.Api
             // Load dependencies
             this.LoadDependencies(services, new DatabaseSettings
             {
-                DatabaseType = DatabaseType.MsSql,
+                DatabaseType = appSettings.DatabaseType,
                 ConnectionString = this.configuration.GetConnectionString("DefaultConnection"),
             });
 
@@ -270,6 +273,10 @@ namespace Website.Presentation.Api
                 case DatabaseType.MsSql:
                     services.AddDbContext<TContextService, TContextImplementation>(options =>
                         options.UseSqlServer(databaseSettings.ConnectionString));
+                    break;
+                case DatabaseType.Sqlite:
+                    services.AddDbContext<TContextService, TContextImplementation>(options =>
+                        options.UseSqlite(databaseSettings.ConnectionString));
                     break;
                 default:
                     throw new NotImplementedException(nameof(DatabaseType));

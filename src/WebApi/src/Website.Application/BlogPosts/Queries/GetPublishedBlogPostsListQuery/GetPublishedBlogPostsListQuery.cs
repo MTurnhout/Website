@@ -39,7 +39,7 @@ namespace Website.Application.BlogPosts.Queries.GetPublishedBlogPostsListQuery
 
             return new List<BlogPostModel>
             {
-                new BlogPostModel { Headline = "Test" }
+                new BlogPostModel { Headline = "Test" },
             };
         }
     }

@@ -26,5 +26,15 @@ namespace Website.Presentation.Api
                 .Build()
                 .Run();
         }
+
+        /// <summary>
+        /// EF Core uses this method at design time to access the DbContext.
+        /// </summary>
+        /// <param name="args">Arguments.</param>
+        /// <returns>Instance of <see cref="IWebHostBuilder"/>.</returns>
+        public static IWebHostBuilder CreateHostBuilder(string[] args)
+            => WebHost
+                .CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
     }
 }

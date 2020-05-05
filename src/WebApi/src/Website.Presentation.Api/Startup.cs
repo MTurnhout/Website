@@ -217,7 +217,9 @@ namespace Website.Presentation.Api
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            var assemblyLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            // For ef migrations we need to get the current assembly location and not of entry assembly
+            var assemblyLocation = Path.GetDirectoryName(Assembly.GetAssembly(typeof(Startup)).Location);
+
             var persistenceAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(
                 Path.Combine(assemblyLocation, "Website.Persistence.dll"));
             var infrastructureAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(
@@ -268,19 +270,25 @@ namespace Website.Presentation.Api
         private void AddDbContext<TContextService, TContextImplementation>(IServiceCollection services, DatabaseSettings databaseSettings)
             where TContextImplementation : DbContext, TContextService
         {
+            var optionsBuilder = new DbContextOptionsBuilder<TContextImplementation>();
+
             switch (databaseSettings.DatabaseType)
             {
                 case DatabaseType.MsSql:
+                    optionsBuilder.UseSqlServer(databaseSettings.ConnectionString);
                     services.AddDbContext<TContextService, TContextImplementation>(options =>
-                        options.UseSqlServer(databaseSettings.ConnectionString));
+                        options.UseSqlServer(databaseSettings.ConnectionString, b => b.MigrationsAssembly("Website.Persistence")));
                     break;
                 case DatabaseType.Sqlite:
+                    optionsBuilder.UseSqlite(databaseSettings.ConnectionString);
                     services.AddDbContext<TContextService, TContextImplementation>(options =>
-                        options.UseSqlite(databaseSettings.ConnectionString));
+                        options.UseSqlite(databaseSettings.ConnectionString, b => b.MigrationsAssembly("Website.Persistence")));
                     break;
                 default:
                     throw new NotImplementedException(nameof(DatabaseType));
             }
+
+            services.AddSingleton(optionsBuilder);
         }
     }
 }

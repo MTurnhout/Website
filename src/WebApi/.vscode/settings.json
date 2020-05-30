@@ -8,7 +8,7 @@
   "editor.formatOnSave": true,
   "omnisharp.enableRoslynAnalyzers": true,
   "[csharp]": {
-    "editor.defaultFormatter": "ms-vscode.csharp",
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
     "files.encoding": "utf8bom"
   }
 }
